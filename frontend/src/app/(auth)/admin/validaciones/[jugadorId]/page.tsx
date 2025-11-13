@@ -1,1 +1,0 @@
-// Validacion Detail Page
