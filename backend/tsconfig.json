@@ -1,0 +1,53 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2022",
+    "lib": ["ES2022"],
+
+    /* Modules */
+    "module": "commonjs",
+    "rootDir": "./src",
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@/features/*": ["src/features/*"],
+      "@/core/*": ["src/core/*"],
+      "@/shared/*": ["src/shared/*"]
+    },
+    "typeRoots": ["./node_modules/@types", "./src/shared/types"],
+    "resolveJsonModule": true,
+
+    /* Emit */
+    "outDir": "./dist",
+    "removeComments": true,
+    "sourceMap": true,
+
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+
+    /* Type Checking */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+
+    /* Completeness */
+    "skipLibCheck": true
+  },
+  "ts-node": {
+    "files": true
+  },
+  "include": [
+    "src/**/*",
+    "scripts/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tests"
+  ]
+}
