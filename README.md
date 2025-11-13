@@ -30,7 +30,7 @@ docker-compose up -d --build
 
 Este comando levantará:
 - ✅ **MongoDB** en puerto `27017`
-- ✅ **Backend API** en puerto `5000`
+- ✅ **Backend API** en puerto `5001`
 - ✅ **Mongo Express** (Admin UI) en puerto `8081`
 
 ### 4. Verificar que todo esté funcionando
@@ -53,7 +53,7 @@ docker-compose logs -f mongodb
 Abre tu navegador y visita:
 
 ```
-http://localhost:5000/health
+http://localhost:5001/health
 ```
 
 Deberías ver algo como:
@@ -80,7 +80,7 @@ Deberías ver algo como:
 #### Opción 3: Endpoint de prueba
 
 ```
-http://localhost:5000/api/v1/test
+http://localhost:5001/api/v1/test
 ```
 
 ### 5. Acceder a Mongo Express (opcional)
@@ -101,7 +101,7 @@ http://localhost:8081
 
 | Servicio | Puerto | URL |
 |----------|--------|-----|
-| **Backend API** | 5000 | http://localhost:5000 |
+| **Backend API** | 5001 | http://localhost:5000 |
 | **MongoDB** | 27017 | mongodb://localhost:27017 |
 | **Mongo Express** | 8081 | http://localhost:8081 |
 
@@ -232,13 +232,13 @@ Deberías ver:
 
 ```bash
 # Health check
-curl http://localhost:5000/health
+curl http://localhost:5001/health
 
 # Endpoint de prueba
-curl http://localhost:5000/api/v1/test
+curl http://localhost:5001/api/v1/test
 
 # Root
-curl http://localhost:5000/
+curl http://localhost:5001/
 ```
 
 ---
@@ -255,7 +255,7 @@ curl http://localhost:5000/
 
 ```bash
 # Ver qué está usando el puerto 5000
-lsof -i :5000
+lsof -i :5001
 
 # Matar el proceso
 kill -9 <PID>
