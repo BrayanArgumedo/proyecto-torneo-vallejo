@@ -16,7 +16,7 @@ export const errorHandler = (
   // Si no es un ApiError, convertirlo
   if (!(error instanceof ApiError)) {
     let statusCode = 500;
-    let message = error.message || 'Error interno del servidor';
+    let message = error?.message || 'Error interno del servidor';
 
     // Errores de Mongoose
     if (error instanceof mongoose.Error.ValidationError) {
@@ -29,7 +29,7 @@ export const errorHandler = (
     } else if ((error as any).code === 11000) {
       // Duplicate key error
       statusCode = 409;
-      const field = Object.keys((error as any).keyPattern)[0];
+      const field = Object.keys((error as any).keyPattern || {})[0];
       message = `Ya existe un registro con ese ${field}`;
     }
 

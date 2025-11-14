@@ -175,12 +175,12 @@ torneoSchema.index({ año: -1, estado: 1 });
 
 // Virtual para obtener el número de equipos
 torneoSchema.virtual('numeroEquipos').get(function (this: ITorneoDocument) {
-  return this.equipos.length;
+  return this.equipos?.length || 0;
 });
 
 // Virtual para obtener el número de fases
 torneoSchema.virtual('numeroFases').get(function (this: ITorneoDocument) {
-  return this.fases.length;
+  return this.fases?.length || 0;
 });
 
 // Virtual para verificar si el torneo está activo

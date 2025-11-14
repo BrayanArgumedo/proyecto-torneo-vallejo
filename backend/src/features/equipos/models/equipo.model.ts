@@ -113,7 +113,7 @@ equipoSchema.index({ torneoId: 1 });
 
 // Virtual para obtener el número de jugadores
 equipoSchema.virtual('numeroJugadores').get(function (this: IEquipoDocument) {
-  return this.jugadores.length;
+  return this.jugadores?.length || 0;
 });
 
 // ========================================

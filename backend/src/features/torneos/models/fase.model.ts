@@ -183,12 +183,12 @@ faseSchema.index({ torneoId: 1, estado: 1 });
 
 // Virtual para obtener el número de equipos
 faseSchema.virtual('numeroEquipos').get(function (this: IFaseDocument) {
-  return this.equiposParticipantes.length;
+  return this.equiposParticipantes?.length || 0;
 });
 
 // Virtual para obtener el número de partidos
 faseSchema.virtual('numeroPartidos').get(function (this: IFaseDocument) {
-  return this.partidos.length;
+  return this.partidos?.length || 0;
 });
 
 // ========================================
