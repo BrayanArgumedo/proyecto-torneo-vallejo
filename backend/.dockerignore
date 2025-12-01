@@ -13,3 +13,9 @@ coverage
 .idea
 *.md
 .DS_Store
+
+# Ignorar contenido de uploads pero mantener estructura
+uploads/**/*
+!uploads/.gitkeep
+!uploads/**/
+!uploads/**/.gitkeep

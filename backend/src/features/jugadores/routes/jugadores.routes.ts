@@ -11,6 +11,13 @@ import {
   jugadorIdSchema,
   jugadoresPorEquipoSchema,
 } from '@/features/jugadores/validations/jugador.validation';
+import { uploadFotoJugador } from '@/core/config/multer.config';
+import {
+  setUploadType,
+  handleMulterError,
+  validateFileRequired,
+} from '@/core/middlewares/upload.middleware';
+import { UploadType } from '@/core/config/multer.config';
 
 const router = Router();
 
@@ -94,6 +101,22 @@ router.put('/:id', adminOrDelegado, validate(updateJugadorSchema), jugadoresCont
  * @access  Private/Admin/Delegado
  */
 router.post('/:id/documentos', adminOrDelegado, validate(agregarDocumentoSchema), jugadoresController.agregarDocumento);
+
+/**
+ * @route   POST /api/jugadores/:id/foto
+ * @desc    Subir foto de jugador
+ * @access  Private/Admin/Delegado
+ */
+router.post(
+  '/:id/foto',
+  adminOrDelegado,
+  validate(jugadorIdSchema),
+  setUploadType(UploadType.FOTO_JUGADOR),
+  uploadFotoJugador.single('foto'),
+  handleMulterError,
+  validateFileRequired('foto'),
+  jugadoresController.uploadFotoJugador
+);
 
 // ========================================
 // RUTAS ADMIN ONLY

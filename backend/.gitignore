@@ -33,3 +33,9 @@ coverage/
 # Build
 dist/
 build/
+
+# Uploads (mantener estructura de carpetas con .gitkeep)
+uploads/**/*
+!uploads/.gitkeep
+!uploads/**/
+!uploads/**/.gitkeep

@@ -56,6 +56,13 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(mongoSanitize());
 
 // ========================================
+// ARCHIVOS ESTÁTICOS
+// ========================================
+
+// Servir archivos subidos (fotos, documentos)
+app.use('/uploads', express.static('uploads'));
+
+// ========================================
 // LOGGING
 // ========================================
 

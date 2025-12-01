@@ -291,3 +291,33 @@ export const findJugadorByCedula = async (cedula: string): Promise<IJugadorDocum
   const jugador = await Jugador.findByCedula(cedula);
   return jugador;
 };
+
+/**
+ * Subir foto de jugador
+ */
+export const uploadFotoJugador = async (
+  id: string,
+  fotoUrl: string
+): Promise<IJugadorDocument> => {
+  const jugador = await Jugador.findById(id);
+
+  if (!jugador) {
+    throw ApiError.notFound('Jugador no encontrado');
+  }
+
+  // Guardar foto anterior para eliminarla después
+  const fotoAnterior = jugador.foto;
+
+  // Actualizar foto
+  jugador.foto = fotoUrl;
+  await jugador.save();
+
+  // Eliminar foto anterior del filesystem si existía
+  if (fotoAnterior) {
+    const { deleteFile, getPathFromUrl } = await import('@/core/utils/fileHandler');
+    const pathAnterior = getPathFromUrl(fotoAnterior);
+    await deleteFile(pathAnterior);
+  }
+
+  return jugador.populate('equipoId', 'nombre escudo');
+};

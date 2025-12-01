@@ -261,3 +261,35 @@ export const findJugadorByCedula = asyncHandler(
     });
   }
 );
+
+// ========================================
+// SUBIR FOTO DE JUGADOR
+// ========================================
+
+export const uploadFotoJugador = asyncHandler(
+  async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params;
+    const file = req.file;
+
+    // Validar que el archivo existe (Multer ya lo procesó)
+    if (!file) {
+      res.status(400).json({
+        success: false,
+        error: 'No se recibió ningún archivo',
+      });
+      return;
+    }
+
+    // Generar URL pública del archivo
+    const fotoUrl = `/${file.path.replace(/\\/g, '/')}`;
+
+    // Actualizar jugador
+    const jugador = await jugadoresService.uploadFotoJugador(id!, fotoUrl);
+
+    res.status(200).json({
+      success: true,
+      message: 'Foto subida exitosamente',
+      data: jugador,
+    });
+  }
+);
