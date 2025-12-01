@@ -1,0 +1,94 @@
+<div class="login-container">
+  <div class="login-card-wrapper">
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="login-header">
+          <i class="pi pi-shield" style="font-size: 3rem; color: var(--primary-color);"></i>
+          <h1>Torneo Vallejo</h1>
+          <p>Iniciar Sesión</p>
+        </div>
+      </ng-template>
+
+      <!-- Mensaje de error -->
+      @if (errorMessage()) {
+        <p-message
+          severity="error"
+          [text]="errorMessage()!"
+          styleClass="mb-3 w-full">
+        </p-message>
+      }
+
+      <!-- Formulario -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Email -->
+        <div class="field mb-3">
+          <label for="email" class="block mb-2">Email</label>
+          <input
+            pInputText
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="tu@email.com"
+            class="w-full"
+            [class.ng-invalid]="email?.invalid && email?.touched"
+            [class.ng-dirty]="email?.dirty" />
+
+          @if (email?.invalid && email?.touched) {
+            <small class="p-error block mt-1">
+              @if (email?.hasError('required')) {
+                El email es requerido
+              }
+              @if (email?.hasError('email')) {
+                Ingresa un email válido
+              }
+            </small>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="field mb-4">
+          <label for="password" class="block mb-2">Contraseña</label>
+          <p-password
+            formControlName="password"
+            [toggleMask]="true"
+            [feedback]="false"
+            inputStyleClass="w-full"
+            styleClass="w-full"
+            placeholder="••••••••"
+            [class.ng-invalid]="password?.invalid && password?.touched"
+            [class.ng-dirty]="password?.dirty">
+          </p-password>
+
+          @if (password?.invalid && password?.touched) {
+            <small class="p-error block mt-1">
+              @if (password?.hasError('required')) {
+                La contraseña es requerida
+              }
+              @if (password?.hasError('minlength')) {
+                Mínimo 6 caracteres
+              }
+            </small>
+          }
+        </div>
+
+        <!-- Botón de envío -->
+        <p-button
+          type="submit"
+          label="Iniciar Sesión"
+          icon="pi pi-sign-in"
+          styleClass="w-full"
+          [loading]="isLoading"
+          [disabled]="loginForm.invalid">
+        </p-button>
+      </form>
+
+      <ng-template pTemplate="footer">
+        <div class="login-footer">
+          <small class="text-muted">
+            Sistema de Gestión de Torneo Vallejo v1.0
+          </small>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>
