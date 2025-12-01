@@ -27,7 +27,7 @@ export enum UploadType {
 const storage = multer.diskStorage({
   destination: (
     req: Request,
-    file: Express.Multer.File,
+    _file: Express.Multer.File,
     cb: DestinationCallback
   ): void => {
     // Obtener el tipo de upload desde los metadatos de la request
@@ -105,8 +105,8 @@ const documentFileFilter = (
   file: Express.Multer.File,
   cb: FileFilterCallback
 ): void => {
-  const allowedMimeTypes = VALIDACION.FORMATOS_DOCUMENTO;
-  const allowedExtensions = VALIDACION.EXTENSIONES_DOCUMENTO;
+  const allowedMimeTypes = VALIDACION.FORMATOS_DOCUMENTO as readonly string[];
+  const allowedExtensions = VALIDACION.EXTENSIONES_DOCUMENTO as readonly string[];
 
   const ext = path.extname(file.originalname).toLowerCase();
   const mimeType = file.mimetype;
