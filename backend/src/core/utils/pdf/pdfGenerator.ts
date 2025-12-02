@@ -2,7 +2,7 @@
  * Clase base para generación de PDFs
  */
 
-import PDFDocument from 'pdfkit';
+import PDFKit from 'pdfkit';
 import { Readable } from 'stream';
 import { PDF_CONFIG } from '@/core/config/pdf.config';
 
@@ -31,12 +31,12 @@ export interface PDFMetadata {
 // ========================================
 
 export class PDFGenerator {
-  protected doc: PDFDocument;
+  protected doc: PDFKit.PDFDocument;
   protected pageCount: number = 1;
 
   constructor(options: PDFOptions = {}) {
     // Crear documento PDF
-    this.doc = new PDFDocument({
+    this.doc = new PDFKit({
       size: PDF_CONFIG.size,
       margins: PDF_CONFIG.margins,
       compress: PDF_CONFIG.compress,
@@ -59,7 +59,7 @@ export class PDFGenerator {
   /**
    * Obtiene el documento PDF
    */
-  getDocument(): PDFDocument {
+  getDocument(): PDFKit.PDFDocument {
     return this.doc;
   }
 

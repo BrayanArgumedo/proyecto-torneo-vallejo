@@ -15,6 +15,7 @@ import equiposRoutes from './features/equipos/routes/equipos.routes';
 import jugadoresRoutes from './features/jugadores/routes/jugadores.routes';
 import torneosRoutes from './features/torneos/routes/torneos.routes';
 import partidosRoutes from './features/partidos/routes/partidos.routes';
+import reportesRoutes from './features/reportes/routes/reportes.routes';
 
 const app: Application = express();
 
@@ -126,6 +127,7 @@ app.get('/', (_req: Request, res: Response) => {
       jugadores: '/api/jugadores',
       torneos: '/api/torneos',
       partidos: '/api/partidos',
+      reportes: '/api/reportes',
     },
     status: 'online',
     timestamp: new Date().toISOString(),
@@ -144,6 +146,7 @@ app.use(`${API_VERSION}/equipos`, equiposRoutes);
 app.use(`${API_VERSION}/jugadores`, jugadoresRoutes);
 app.use(`${API_VERSION}/torneos`, torneosRoutes);
 app.use(`${API_VERSION}/partidos`, partidosRoutes);
+app.use(`${API_VERSION}/reportes`, reportesRoutes);
 
 // ========================================
 // ERROR HANDLERS

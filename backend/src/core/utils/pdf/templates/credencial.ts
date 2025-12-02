@@ -4,7 +4,7 @@
 
 import { PDFGenerator } from '../pdfGenerator';
 import { PDF_COLORS, FONT_SIZES, TEXT_STYLES, SPACING } from '../pdfStyles';
-import { drawRoundedRect, drawLabelValue, drawStyledText } from '../pdfHelpers';
+import { drawRoundedRect, drawLabelValue } from '../pdfHelpers';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { getEtiquetaTipoJugador } from '@/shared/types/enums';
@@ -83,7 +83,7 @@ export class CredencialTemplate extends PDFGenerator {
     doc
       .fontSize(TEXT_STYLES.subtitle.fontSize)
       .font(TEXT_STYLES.subtitle.font!)
-      .fillColor(TEXT_STYLES.textLight)
+      .fillColor(PDF_COLORS.textLight)
       .text(`${torneo.nombre} ${torneo.año}`, {
         align: 'center',
       });

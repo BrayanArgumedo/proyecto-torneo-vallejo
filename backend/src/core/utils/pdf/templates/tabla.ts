@@ -3,8 +3,8 @@
  */
 
 import { PDFGenerator } from '../pdfGenerator';
-import { PDF_COLORS, FONT_SIZES, TEXT_STYLES } from '../pdfStyles';
-import { drawHeader, drawTable, TableColumn } from '../pdfHelpers';
+import { PDF_COLORS, FONT_SIZES } from '../pdfStyles';
+import { drawHeader, TableColumn } from '../pdfHelpers';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
@@ -70,7 +70,7 @@ export class TablaTemplate extends PDFGenerator {
    */
   private drawTabla(): void {
     const doc = this.doc;
-    const { fase, torneo, equipos, clasificados, eliminados } = this.data;
+    const { fase, torneo, clasificados, eliminados } = this.data;
 
     // Header
     const subtitle = fase.grupo ? `${fase.nombre} - Grupo ${fase.grupo}` : fase.nombre;
@@ -295,7 +295,7 @@ export class TablaTemplate extends PDFGenerator {
         .fontSize(FONT_SIZES.tableBody)
         .font(isPtsColumn || isEquipoColumn ? 'Helvetica-Bold' : 'Helvetica')
         .fillColor(PDF_COLORS.text)
-        .text(values[index], currentX + 5, y + 7, {
+        .text(values[index]!, currentX + 5, y + 7, {
           width: col.width - 10,
           align: col.align || 'center',
         });

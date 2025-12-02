@@ -3,7 +3,7 @@
  */
 
 import { PDFGenerator } from '../pdfGenerator';
-import { PDF_COLORS, FONT_SIZES, TEXT_STYLES, SPACING } from '../pdfStyles';
+import { PDF_COLORS, FONT_SIZES } from '../pdfStyles';
 import { drawHeader, drawHorizontalLine, drawLabelValue } from '../pdfHelpers';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -73,7 +73,7 @@ export class PlanillaTemplate extends PDFGenerator {
    */
   private drawPlanilla(): void {
     const doc = this.doc;
-    const { partido, equipoLocal, equipoVisitante, torneo, fase } = this.data;
+    const { equipoLocal, equipoVisitante, torneo } = this.data;
 
     // Header
     drawHeader(
@@ -309,10 +309,10 @@ export class PlanillaTemplate extends PDFGenerator {
         .font('Helvetica-Bold')
         .fillColor(PDF_COLORS.text)
         .text(`${jugador.numeroCamiseta}`, currentX + 5, currentY + 7, {
-          width: columns[0].width - 10,
+          width: columns[0]!.width - 10,
           align: 'center',
         });
-      currentX += columns[0].width;
+      currentX += columns[0]!.width;
 
       // Nombre
       doc
@@ -324,11 +324,11 @@ export class PlanillaTemplate extends PDFGenerator {
           currentX + 5,
           currentY + 7,
           {
-            width: columns[1].width - 10,
+            width: columns[1]!.width - 10,
             align: 'left',
           }
         );
-      currentX += columns[1].width;
+      currentX += columns[1]!.width;
 
       // Posición
       doc
@@ -336,13 +336,13 @@ export class PlanillaTemplate extends PDFGenerator {
         .font('Helvetica')
         .fillColor(PDF_COLORS.textLight)
         .text(jugador.posicion, currentX + 5, currentY + 7, {
-          width: columns[2].width - 10,
+          width: columns[2]!.width - 10,
           align: 'center',
         });
-      currentX += columns[2].width;
+      currentX += columns[2]!.width;
 
       // Espacio para firma (vacío)
-      currentX += columns[3].width;
+      currentX += columns[3]!.width;
 
       // Líneas verticales
       currentX = tableX;

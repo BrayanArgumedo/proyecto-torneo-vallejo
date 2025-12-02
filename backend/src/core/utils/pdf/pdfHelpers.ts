@@ -2,14 +2,16 @@
  * Funciones helper para generación de PDFs
  */
 
-import PDFDocument from 'pdfkit';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { PDF_COLORS, FONT_SIZES, SPACING, TEXT_STYLES, TextStyle } from './pdfStyles';
+import { PDF_COLORS, SPACING, TEXT_STYLES, TextStyle } from './pdfStyles';
+import type { PDFGenerator } from './pdfGenerator';
 
 // ========================================
 // TIPOS
 // ========================================
+
+type PDFDoc = PDFGenerator['doc'];
 
 export interface TableColumn {
   header: string;
@@ -39,7 +41,7 @@ export interface TableOptions {
  * Dibuja header estándar con título
  */
 export const drawHeader = (
-  doc: PDFDocument,
+  doc: PDFDoc,
   title: string,
   subtitle?: string
 ): void => {
@@ -81,7 +83,7 @@ export const drawHeader = (
 /**
  * Dibuja footer con paginación y fecha
  */
-export const drawFooter = (doc: PDFDocument, pageNumber: number): void => {
+export const drawFooter = (doc: PDFDoc, pageNumber: number): void => {
   const pageWidth = doc.page.width;
   const pageHeight = doc.page.height;
   const footerY = pageHeight - 30;
@@ -117,7 +119,7 @@ export const drawFooter = (doc: PDFDocument, pageNumber: number): void => {
  * Dibuja etiqueta con valor
  */
 export const drawLabelValue = (
-  doc: PDFDocument,
+  doc: PDFDoc,
   label: string,
   value: string,
   x: number,
@@ -146,7 +148,7 @@ export const drawLabelValue = (
  * Dibuja texto con estilo
  */
 export const drawStyledText = (
-  doc: PDFDocument,
+  doc: PDFDoc,
   text: string,
   x: number,
   y: number,
@@ -174,7 +176,7 @@ export const drawStyledText = (
  * Dibuja rectángulo con esquinas redondeadas
  */
 export const drawRoundedRect = (
-  doc: PDFDocument,
+  doc: PDFDoc,
   x: number,
   y: number,
   width: number,
@@ -203,7 +205,7 @@ export const drawRoundedRect = (
  * Dibuja línea horizontal
  */
 export const drawHorizontalLine = (
-  doc: PDFDocument,
+  doc: PDFDoc,
   x1: number,
   y: number,
   x2: number,
@@ -221,7 +223,7 @@ export const drawHorizontalLine = (
  * Dibuja línea vertical
  */
 export const drawVerticalLine = (
-  doc: PDFDocument,
+  doc: PDFDoc,
   x: number,
   y1: number,
   y2: number,
@@ -242,7 +244,7 @@ export const drawVerticalLine = (
 /**
  * Dibuja una tabla completa
  */
-export const drawTable = (doc: PDFDocument, options: TableOptions): void => {
+export const drawTable = (doc: PDFDoc, options: TableOptions): void => {
   const {
     x,
     y,
@@ -282,7 +284,7 @@ export const drawTable = (doc: PDFDocument, options: TableOptions): void => {
  * Dibuja header de tabla
  */
 const drawTableHeader = (
-  doc: PDFDocument,
+  doc: PDFDoc,
   x: number,
   y: number,
   columns: TableColumn[],
@@ -311,7 +313,7 @@ const drawTableHeader = (
 
   // Bordes
   doc.strokeColor(PDF_COLORS.border).lineWidth(1);
-  columns.forEach((col, index) => {
+  columns.forEach((_col, index) => {
     if (index > 0) {
       const lineX = x + columns.slice(0, index).reduce((sum, c) => sum + c.width, 0);
       drawVerticalLine(doc, lineX, y, y + height);
@@ -323,7 +325,7 @@ const drawTableHeader = (
  * Dibuja fila de tabla
  */
 const drawTableRow = (
-  doc: PDFDocument,
+  doc: PDFDoc,
   x: number,
   y: number,
   columns: TableColumn[],
@@ -338,7 +340,7 @@ const drawTableRow = (
 
   // Texto de celdas
   let currentX = x;
-  columns.forEach((col, index) => {
+  columns.forEach((col, _index) => {
     const key = col.header.toLowerCase().replace(/\s+/g, '');
     const cellValue = row[key] !== undefined ? String(row[key]) : '';
 
@@ -356,7 +358,7 @@ const drawTableRow = (
 
   // Bordes verticales
   doc.strokeColor(PDF_COLORS.border).lineWidth(1);
-  columns.forEach((col, index) => {
+  columns.forEach((_col, index) => {
     if (index > 0) {
       const lineX = x + columns.slice(0, index).reduce((sum, c) => sum + c.width, 0);
       drawVerticalLine(doc, lineX, y, y + height);
@@ -375,7 +377,7 @@ const drawTableRow = (
  * Centra texto en el ancho de página
  */
 export const centerText = (
-  doc: PDFDocument,
+  doc: PDFDoc,
   text: string,
   y: number,
   style: TextStyle
@@ -395,7 +397,7 @@ export const centerText = (
 /**
  * Obtiene el ancho del texto
  */
-export const getTextWidth = (doc: PDFDocument, text: string, fontSize: number): number => {
+export const getTextWidth = (doc: PDFDoc, text: string, fontSize: number): number => {
   doc.fontSize(fontSize);
   return doc.widthOfString(text);
 };
@@ -403,7 +405,7 @@ export const getTextWidth = (doc: PDFDocument, text: string, fontSize: number): 
 /**
  * Verifica si necesita nueva página
  */
-export const checkPageBreak = (doc: PDFDocument, requiredSpace: number): boolean => {
+export const checkPageBreak = (doc: PDFDoc, requiredSpace: number): boolean => {
   const pageHeight = doc.page.height;
   const bottomMargin = 80;
 

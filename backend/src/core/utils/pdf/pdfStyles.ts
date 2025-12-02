@@ -197,9 +197,9 @@ export const hexToRgb = (hex: string): [number, number, number] => {
     return [0, 0, 0];
   }
   return [
-    parseInt(result[1], 16) / 255,
-    parseInt(result[2], 16) / 255,
-    parseInt(result[3], 16) / 255,
+    parseInt(result[1]!, 16) / 255,
+    parseInt(result[2]!, 16) / 255,
+    parseInt(result[3]!, 16) / 255,
   ];
 };
 

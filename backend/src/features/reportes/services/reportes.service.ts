@@ -41,7 +41,7 @@ export const generarCredencialJugador = async (jugadorId: string): Promise<Buffe
   // Preparar datos para el template
   const data: CredencialData = {
     jugador: {
-      _id: jugador._id.toString(),
+      _id: (jugador._id as any).toString(),
       nombre: jugador.nombre,
       apellido: jugador.apellido,
       cedula: jugador.cedula,
@@ -188,7 +188,7 @@ export const generarTablaPosiciones = async (faseId: string): Promise<Buffer> =>
   const data: TablaData = {
     fase: {
       nombre: fase.nombre,
-      formato: fase.formato,
+      formato: (fase as any).formato,
       grupo: undefined, // TODO: Agregar si es necesario
     },
     torneo: {

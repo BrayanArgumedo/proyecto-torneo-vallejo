@@ -3,7 +3,7 @@
  */
 
 import { PDFGenerator } from '../pdfGenerator';
-import { PDF_COLORS, FONT_SIZES, TEXT_STYLES, SPACING } from '../pdfStyles';
+import { PDF_COLORS, FONT_SIZES, SPACING } from '../pdfStyles';
 import { drawHeader, drawLabelValue, drawHorizontalLine, drawRoundedRect } from '../pdfHelpers';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -85,7 +85,7 @@ export class ActaTemplate extends PDFGenerator {
    */
   private drawActa(): void {
     const doc = this.doc;
-    const { equipoLocal, equipoVisitante, torneo } = this.data;
+    const { torneo } = this.data;
 
     // Header
     drawHeader(
@@ -260,7 +260,7 @@ export class ActaTemplate extends PDFGenerator {
       return;
     }
 
-    goles.forEach((gol, index) => {
+    goles.forEach((gol, _index) => {
       const iconColor = gol.tipo === 'AUTOGOL' ? PDF_COLORS.danger : PDF_COLORS.success;
       const tipoText = gol.tipo === 'PENAL' ? ' (P)' : gol.tipo === 'AUTOGOL' ? ' (AG)' : '';
 
