@@ -1,3 +1,5 @@
+//src/app/app.routes.ts
+
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
@@ -23,43 +25,31 @@ export const routes: Routes = [
   },
 
   // ============================================
-  // 👨‍💼 ADMIN - Rutas protegidas para administradores
+  // 👨‍💼 ADMIN - Dashboard temporal
   // ============================================
-  // TODO: Descomentar cuando se cree el componente
-  // {
-  //   path: 'admin',
-  //   canActivate: [authGuard, roleGuard],
-  //   data: { roles: [Rol.ADMIN] },
-  //   children: [
-  //     {
-  //       path: '',
-  //       loadComponent: () =>
-  //         import('./features/admin/dashboard/admin-dashboard.component').then(
-  //           m => m.AdminDashboardComponent
-  //         )
-  //     }
-  //   ]
-  // },
+  {
+    path: 'admin',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: [Rol.ADMIN] },
+    loadComponent: () =>
+      import('./features/admin/dashboard/admin-dashboard.component').then(
+        m => m.AdminDashboardComponent
+      )
+  },
 
   // ============================================
-  // 👤 DELEGADO - Rutas protegidas para delegados
+  // 👤 DELEGADO - Dashboard temporal
   // ============================================
-  // TODO: Descomentar cuando se cree el componente
-  // {
-  //   path: 'delegado',
-  //   canActivate: [authGuard, roleGuard],
-  //   data: { roles: [Rol.DELEGADO] },
-  //   children: [
-  //     {
-  //       path: '',
-  //       loadComponent: () =>
-  //         import('./features/delegado/dashboard/delegado-dashboard.component').then(
-  //           m => m.DelegadoDashboardComponent
-  //         )
-  //     }
-  //   ]
-  // },
-
+  {
+    path: 'delegado',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: [Rol.DELEGADO] },
+    loadComponent: () =>
+      import('./features/delegado/dashboard/delegado-dashboard.component').then(
+        m => m.DelegadoDashboardComponent
+      )
+  },
+  
   // ============================================
   // 🌐 VISTA PÚBLICA (sin autenticación)
   // ============================================

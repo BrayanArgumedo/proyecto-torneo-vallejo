@@ -1,66 +1,93 @@
+<!-- src/app/features/auth/login/login.component.html -->
 <div class="login-container">
+  <div class="soccer-field-lines"></div>
+  
   <div class="login-card-wrapper">
-    <p-card>
+    <p-card styleClass="login-card">
+      <!-- Header -->
       <ng-template pTemplate="header">
         <div class="login-header">
-          <i class="pi pi-shield" style="font-size: 3rem; color: var(--primary-color);"></i>
-          <h1>Torneo Vallejo</h1>
-          <p>Iniciar Sesión</p>
+          <div class="logo-wrapper">
+            <i class="pi pi-trophy logo-icon"></i>
+          </div>
+          <h1 class="title">Torneo de Microfútbol</h1>
+          <h2 class="subtitle">Urbanización Vallejo</h2>
+          <p class="description">Iniciar Sesión</p>
         </div>
       </ng-template>
 
-      <!-- Mensaje de error -->
+      <!-- Mensaje de Error - MEJORADO -->
       @if (errorMessage()) {
-        <p-message
-          severity="error"
-          [text]="errorMessage()!"
-          styleClass="mb-3 w-full">
-        </p-message>
+        <div class="error-wrapper">
+          <div class="error-box">
+            <i class="pi pi-times-circle error-icon"></i>
+            <span class="error-text">{{ errorMessage() }}</span>
+          </div>
+        </div>
       }
 
       <!-- Formulario -->
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <!-- Email -->
-        <div class="field mb-3">
-          <label for="email" class="block mb-2">Email</label>
-          <input
-            pInputText
-            id="email"
-            type="email"
-            formControlName="email"
-            placeholder="tu@email.com"
-            class="w-full"
-            [class.ng-invalid]="email?.invalid && email?.touched"
-            [class.ng-dirty]="email?.dirty" />
-
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        
+        <!-- Campo Email - MEJORADO -->
+        <div class="form-field">
+          <label for="email" class="field-label">
+            <i class="pi pi-envelope"></i>
+            <span>Correo Electrónico</span>
+          </label>
+          <div class="input-wrapper">
+            <i class="pi pi-envelope input-icon"></i>
+            <input
+              pInputText
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="Ingresa tu correo"
+              class="w-full custom-input"
+              [class.p-invalid]="email?.invalid && email?.touched" />
+          </div>
+          
           @if (email?.invalid && email?.touched) {
-            <small class="p-error block mt-1">
+            <small class="field-error">
+              <i class="pi pi-exclamation-circle"></i>
               @if (email?.hasError('required')) {
-                El email es requerido
+                El correo electrónico es requerido
               }
               @if (email?.hasError('email')) {
-                Ingresa un email válido
+                Ingresa un correo válido
               }
             </small>
           }
         </div>
 
-        <!-- Password -->
-        <div class="field mb-4">
-          <label for="password" class="block mb-2">Contraseña</label>
-          <p-password
-            formControlName="password"
-            [toggleMask]="true"
-            [feedback]="false"
-            inputStyleClass="w-full"
-            styleClass="w-full"
-            placeholder="••••••••"
-            [class.ng-invalid]="password?.invalid && password?.touched"
-            [class.ng-dirty]="password?.dirty">
-          </p-password>
-
+        <!-- Campo Password - MEJORADO -->
+        <div class="form-field">
+          <label for="password" class="field-label">
+            <i class="pi pi-lock"></i>
+            <span>Contraseña</span>
+          </label>
+          <div class="password-wrapper">
+            <i class="pi pi-lock input-icon"></i>
+            <input
+              [type]="showPassword() ? 'text' : 'password'"
+              pInputText
+              id="password"
+              formControlName="password"
+              placeholder="Ingresa tu contraseña"
+              class="w-full custom-input password-input"
+              [class.p-invalid]="password?.invalid && password?.touched" />
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="togglePassword()"
+              tabindex="-1">
+              <i [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+            </button>
+          </div>
+          
           @if (password?.invalid && password?.touched) {
-            <small class="p-error block mt-1">
+            <small class="field-error">
+              <i class="pi pi-exclamation-circle"></i>
               @if (password?.hasError('required')) {
                 La contraseña es requerida
               }
@@ -71,22 +98,24 @@
           }
         </div>
 
-        <!-- Botón de envío -->
+        <!-- Botón Submit -->
         <p-button
           type="submit"
           label="Iniciar Sesión"
           icon="pi pi-sign-in"
-          styleClass="w-full"
+          styleClass="w-full p-button-lg"
           [loading]="isLoading"
           [disabled]="loginForm.invalid">
         </p-button>
       </form>
 
+      <!-- Footer -->
       <ng-template pTemplate="footer">
         <div class="login-footer">
-          <small class="text-muted">
-            Sistema de Gestión de Torneo Vallejo v1.0
-          </small>
+          <div class="footer-icon">
+            <i class="pi pi-shield"></i>
+          </div>
+          <small>Sistema de Gestión - Torneo Vallejo v1.0</small>
         </div>
       </ng-template>
     </p-card>

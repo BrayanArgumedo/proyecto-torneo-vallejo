@@ -1,72 +1,471 @@
+/* src/app/features/auth/login/login.component.scss */
+
+// ============================================
+// 🎨 VARIABLES
+// ============================================
+
+$verde-campo: #1e7e34;
+$verde-claro: #28a745;
+$amarillo: #ffc107;
+$blanco: #ffffff;
+$gris-claro: #f8f9fa;
+$gris: #6c757d;
+$gris-placeholder: #adb5bd;
+$rojo-tarjeta: #dc3545;
+
+// ============================================
+// 🏟️ CONTENEDOR PRINCIPAL
+// ============================================
+
 .login-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 1rem;
+  width: 100%;
+  padding: 2rem;
+  
+  background: linear-gradient(135deg, 
+    darken($verde-campo, 5%) 0%, 
+    $verde-campo 50%, 
+    lighten($verde-campo, 5%) 100%
+  );
+  
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      rgba(0, 0, 0, 0.05) 40px,
+      rgba(0, 0, 0, 0.05) 80px
+    );
+  
+  overflow: hidden;
 }
+
+// ============================================
+// ⚽ LÍNEAS DEL CAMPO
+// ============================================
+
+.soccer-field-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.15;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: $blanco;
+    transform: translateX(-50%);
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 200px;
+    height: 200px;
+    border: 3px solid $blanco;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// ============================================
+// 🏆 CARD DE LOGIN
+// ============================================
 
 .login-card-wrapper {
   width: 100%;
-  max-width: 450px;
-
-  ::ng-deep .p-card {
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-
-    .p-card-body {
-      padding: 2rem;
-    }
-
+  max-width: 480px;
+  position: relative;
+  z-index: 10;
+  animation: slideInUp 0.6s ease-out;
+  
+  ::ng-deep .login-card {
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    border: 4px solid $amarillo;
+    background: $blanco;
+    
     .p-card-header {
-      background-color: white;
-      border-bottom: 1px solid #e5e7eb;
+      background: linear-gradient(135deg, $gris-claro 0%, $blanco 100%);
+      border-bottom: 3px solid $amarillo;
+      padding: 0;
+    }
+    
+    .p-card-body {
+      padding: 2.5rem;
+      background: $blanco;
+    }
+    
+    .p-card-footer {
+      background: linear-gradient(135deg, $gris-claro 0%, $blanco 100%);
+      border-top: 3px solid $amarillo;
+      padding: 1.5rem 2.5rem;
     }
   }
 }
+
+// ============================================
+// 📋 HEADER
+// ============================================
 
 .login-header {
   text-align: center;
-  padding: 2rem 1rem 1rem;
-
-  h1 {
-    margin: 1rem 0 0.5rem;
-    color: var(--text-color);
-    font-size: 1.75rem;
-    font-weight: 700;
+  padding: 3rem 2rem 2rem;
+  
+  .logo-wrapper {
+    margin-bottom: 1.5rem;
+    
+    .logo-icon {
+      font-size: 5rem;
+      color: $amarillo;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      animation: bounce 2s ease-in-out infinite;
+    }
   }
-
-  p {
+  
+  .title {
+    margin: 0 0 0.5rem;
+    font-size: 1.875rem;
+    font-weight: 900;
+    color: $verde-campo;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .subtitle {
+    margin: 0 0 1rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: $amarillo;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .description {
     margin: 0;
-    color: var(--text-secondary);
+    color: $gris;
     font-size: 0.95rem;
+    font-weight: 500;
   }
 }
+
+// ============================================
+// ⚠️ MENSAJE DE ERROR - MEJORADO
+// ============================================
+
+.error-wrapper {
+  margin-bottom: 1.5rem;
+  animation: slideDown 0.4s ease-out;
+}
+
+.error-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #fee 0%, #fdd 100%);
+  border: 2px solid $rojo-tarjeta;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 12px rgba($rojo-tarjeta, 0.2);
+  
+  .error-icon {
+    font-size: 1.5rem;
+    color: $rojo-tarjeta;
+    flex-shrink: 0;
+  }
+  
+  .error-text {
+    color: darken($rojo-tarjeta, 10%);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+  }
+}
+
+// ============================================
+// 📝 FORMULARIO
+// ============================================
+
+.login-form {
+  .form-field {
+    margin-bottom: 1.75rem;
+    
+    &:last-of-type {
+      margin-bottom: 2rem;
+    }
+  }
+  
+  .field-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: $verde-campo;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    i {
+      color: $amarillo;
+      font-size: 1rem;
+    }
+  }
+  
+  // Wrapper para inputs con ícono
+  .input-wrapper,
+  .password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 1.125rem;
+    color: $verde-campo;
+    font-size: 1.125rem;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .custom-input {
+    padding-left: 3.25rem !important;
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    padding: 0.9375rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    
+    // Placeholder más sutil
+    &::placeholder {
+      color: $gris-placeholder;
+      font-weight: 400;
+      opacity: 0.6;
+    }
+    
+    &:focus {
+      border-color: $verde-campo;
+      box-shadow: 0 0 0 3px rgba($verde-campo, 0.15);
+      
+      &::placeholder {
+        opacity: 0.4;
+      }
+    }
+    
+    &.p-invalid {
+      border-color: $rojo-tarjeta;
+      
+      &:focus {
+        box-shadow: 0 0 0 3px rgba($rojo-tarjeta, 0.15);
+      }
+    }
+  }
+  
+  // Password con ícono
+  .password-input {
+    padding-right: 3.5rem !important;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    padding: 0.625rem;
+    cursor: pointer;
+    color: $verde-campo;
+    font-size: 1.125rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+      background: rgba($verde-campo, 0.1);
+      color: darken($verde-campo, 10%);
+    }
+    
+    &:active {
+      transform: scale(0.95);
+    }
+    
+    i {
+      display: block;
+    }
+  }
+  
+  .field-error {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: $rojo-tarjeta;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    animation: shake 0.4s ease-in-out;
+    
+    i {
+      font-size: 1rem;
+    }
+  }
+}
+
+// ============================================
+// 🔘 BOTÓN
+// ============================================
+
+::ng-deep .p-button {
+  background: linear-gradient(135deg, $verde-campo 0%, $verde-claro 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba($verde-campo, 0.4);
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, darken($verde-campo, 5%) 0%, darken($verde-claro, 5%) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($verde-campo, 0.5);
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .p-button-icon {
+    font-size: 1.125rem;
+  }
+}
+
+// ============================================
+// 📄 FOOTER
+// ============================================
 
 .login-footer {
   text-align: center;
-  padding: 1rem 0 0;
-  border-top: 1px solid #e5e7eb;
-
-  .text-muted {
-    color: var(--text-secondary);
+  
+  .footer-icon {
+    margin-bottom: 0.5rem;
+    
+    i {
+      font-size: 1.5rem;
+      color: $verde-campo;
+    }
+  }
+  
+  small {
+    display: block;
+    color: $gris;
+    font-size: 0.875rem;
+    font-weight: 500;
   }
 }
 
-.field {
-  label {
-    font-weight: 600;
-    color: var(--text-color);
+// ============================================
+// 🎬 ANIMACIONES
+// ============================================
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-// Estilos para p-password
-::ng-deep {
-  .p-password {
-    width: 100%;
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
 
-    input {
-      width: 100%;
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// 📱 RESPONSIVE
+// ============================================
+
+@media (max-width: 576px) {
+  .login-container {
+    padding: 1rem;
+  }
+  
+  .login-card-wrapper {
+    ::ng-deep .p-card-body {
+      padding: 1.5rem;
+    }
+    
+    ::ng-deep .p-card-footer {
+      padding: 1rem 1.5rem;
+    }
+  }
+  
+  .login-header {
+    padding: 2rem 1rem 1.5rem;
+    
+    .logo-icon {
+      font-size: 4rem !important;
+    }
+    
+    .title {
+      font-size: 1.5rem;
+    }
+    
+    .subtitle {
+      font-size: 1rem;
     }
   }
 }

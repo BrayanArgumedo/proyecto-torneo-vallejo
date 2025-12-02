@@ -6,17 +6,10 @@ import { Router } from '@angular/router';
 // PrimeNG
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
-import { MessageModule } from 'primeng/message';
 
 import { AuthService } from '../../../core/services/auth.service';
 
-/**
- * 🔐 LOGIN COMPONENT
- *
- * Componente de inicio de sesión con formulario reactivo
- */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -25,9 +18,7 @@ import { AuthService } from '../../../core/services/auth.service';
     ReactiveFormsModule,
     CardModule,
     InputTextModule,
-    PasswordModule,
-    ButtonModule,
-    MessageModule
+    ButtonModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -37,8 +28,9 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  // Signal para manejar errores
+  // Signals
   errorMessage = signal<string | null>(null);
+  showPassword = signal<boolean>(false);
 
   // Formulario reactivo
   loginForm: FormGroup;
@@ -48,6 +40,13 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+  }
+
+  /**
+   * Toggle mostrar/ocultar contraseña
+   */
+  togglePassword(): void {
+    this.showPassword.set(!this.showPassword());
   }
 
   /**
@@ -64,11 +63,12 @@ export class LoginComponent {
 
     this.authService.login(credentials).subscribe({
       next: (response) => {
-        // El redirect lo maneja el AuthService automáticamente
         console.log('Login exitoso:', response);
+        // La redirección la maneja el AuthService automáticamente
       },
       error: (error) => {
-        this.errorMessage.set(error.message || 'Error al iniciar sesión');
+        const message = error.error?.message || 'Email o contraseña incorrectos';
+        this.errorMessage.set(message);
       }
     });
   }
