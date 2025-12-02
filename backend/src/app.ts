@@ -1,21 +1,27 @@
-import express, { Request, Response, Application } from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import mongoSanitize from 'express-mongo-sanitize';
-import rateLimit from 'express-rate-limit';
+import express, { Request, Response, Application } from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import mongoSanitize from "express-mongo-sanitize";
+import rateLimit from "express-rate-limit";
 
-import { checkConnection, getConnectionStatus } from './core/database/connection';
-import { errorHandler, notFound } from './core/middlewares/errorHandler.middleware';
+import {
+  checkConnection,
+  getConnectionStatus,
+} from "./core/database/connection";
+import {
+  errorHandler,
+  notFound,
+} from "./core/middlewares/errorHandler.middleware";
 
 // Rutas
-import authRoutes from './features/auth/routes/auth.routes';
-import usuariosRoutes from './features/usuarios/routes/usuarios.routes';
-import equiposRoutes from './features/equipos/routes/equipos.routes';
-import jugadoresRoutes from './features/jugadores/routes/jugadores.routes';
-import torneosRoutes from './features/torneos/routes/torneos.routes';
-import partidosRoutes from './features/partidos/routes/partidos.routes';
-import reportesRoutes from './features/reportes/routes/reportes.routes';
+import authRoutes from "./features/auth/routes/auth.routes";
+import usuariosRoutes from "./features/usuarios/routes/usuarios.routes";
+import equiposRoutes from "./features/equipos/routes/equipos.routes";
+import jugadoresRoutes from "./features/jugadores/routes/jugadores.routes";
+import torneosRoutes from "./features/torneos/routes/torneos.routes";
+import partidosRoutes from "./features/partidos/routes/partidos.routes";
+import reportesRoutes from "./features/reportes/routes/reportes.routes";
 
 const app: Application = express();
 
@@ -27,31 +33,34 @@ const app: Application = express();
 app.use(helmet());
 
 // CORS - Configuración
-app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || "http://localhost:4200",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 // Rate limiting - Prevenir abuso
 const limiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'), // 15 minutos
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'),
-  message: 'Demasiadas peticiones desde esta IP, por favor intenta de nuevo más tarde',
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || "900000"), // 15 minutos
+  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || "100"),
+  message:
+    "Demasiadas peticiones desde esta IP, por favor intenta de nuevo más tarde",
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-app.use('/api/', limiter);
+app.use("/api/", limiter);
 
 // ========================================
 // MIDDLEWARES DE PARSING
 // ========================================
 
 // Body parsers
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 // Sanitización contra NoSQL injection
 app.use(mongoSanitize());
@@ -61,32 +70,32 @@ app.use(mongoSanitize());
 // ========================================
 
 // Servir archivos subidos (fotos, documentos)
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 
 // ========================================
 // LOGGING
 // ========================================
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 } else {
-  app.use(morgan('combined'));
+  app.use(morgan("combined"));
 }
 
 // ========================================
 // HEALTH CHECK ENDPOINT
 // ========================================
 
-app.get('/health', async (_req: Request, res: Response) => {
+app.get("/health", async (_req: Request, res: Response) => {
   try {
     const dbConnected = await checkConnection();
     const dbStatus = getConnectionStatus();
 
     const healthCheck = {
-      status: dbConnected ? 'healthy' : 'unhealthy',
+      status: dbConnected ? "healthy" : "unhealthy",
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
-      environment: process.env.NODE_ENV || 'development',
+      environment: process.env.NODE_ENV || "development",
       database: {
         connected: dbConnected,
         status: dbStatus.status,
@@ -104,7 +113,7 @@ app.get('/health', async (_req: Request, res: Response) => {
     res.status(statusCode).json(healthCheck);
   } catch (error) {
     res.status(503).json({
-      status: 'unhealthy',
+      status: "unhealthy",
       timestamp: new Date().toISOString(),
       error: (error as Error).message,
     });
@@ -115,21 +124,21 @@ app.get('/health', async (_req: Request, res: Response) => {
 // RUTA DE BIENVENIDA
 // ========================================
 
-app.get('/', (_req: Request, res: Response) => {
+app.get("/", (_req: Request, res: Response) => {
   res.json({
-    message: '🏆 API Torneo Vallejo',
-    version: '1.0.0',
+    message: "🏆 API Torneo Vallejo",
+    version: "1.0.0",
     endpoints: {
-      health: '/health',
-      auth: '/api/auth',
-      usuarios: '/api/usuarios',
-      equipos: '/api/equipos',
-      jugadores: '/api/jugadores',
-      torneos: '/api/torneos',
-      partidos: '/api/partidos',
-      reportes: '/api/reportes',
+      health: "/health",
+      auth: "/api/auth",
+      usuarios: "/api/usuarios",
+      equipos: "/api/equipos",
+      jugadores: "/api/jugadores",
+      torneos: "/api/torneos",
+      partidos: "/api/partidos",
+      reportes: "/api/reportes",
     },
-    status: 'online',
+    status: "online",
     timestamp: new Date().toISOString(),
   });
 });
@@ -138,7 +147,7 @@ app.get('/', (_req: Request, res: Response) => {
 // API ROUTES
 // ========================================
 
-const API_VERSION = '/api';
+const API_VERSION = "/api";
 
 app.use(`${API_VERSION}/auth`, authRoutes);
 app.use(`${API_VERSION}/usuarios`, usuariosRoutes);
