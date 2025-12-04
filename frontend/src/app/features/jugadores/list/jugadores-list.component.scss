@@ -1,0 +1,306 @@
+// src/app/features/jugadores/list/jugadores-list.component.scss
+
+// ============================================
+// Variables
+// ============================================
+$verde-campo: #1e7e34;
+$verde-claro: #28a745;
+$amarillo: #ffc107;
+$gris-claro: #f8f9fa;
+$gris: #6c757d;
+
+// ============================================
+// Container
+// ============================================
+.jugadores-list-container {
+  padding: 1.5rem;
+  max-width: 100%;
+}
+
+// ============================================
+// Toolbar
+// ============================================
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.toolbar-icon {
+  font-size: 1.75rem;
+  color: $verde-campo;
+}
+
+.toolbar-title {
+  color: $verde-campo;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+// ============================================
+// Filters
+// ============================================
+.filter-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: $gris-claro;
+  border-bottom: 1px solid #dee2e6;
+
+  i {
+    font-size: 1.25rem;
+    color: $verde-campo;
+  }
+
+  span {
+    color: $verde-campo;
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: $gris;
+  }
+
+  &.filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+}
+
+// ============================================
+// Table Customization
+// ============================================
+:host ::ng-deep {
+  .p-datatable {
+    .p-datatable-thead > tr > th {
+      background: $verde-campo;
+      color: white;
+      font-weight: 600;
+      padding: 1rem;
+      border: none;
+    }
+
+    .p-datatable-tbody > tr {
+      &:hover {
+        background: rgba($verde-campo, 0.05);
+      }
+
+      > td {
+        padding: 0.75rem 1rem;
+        vertical-align: middle;
+      }
+    }
+
+    .p-sortable-column-icon {
+      color: white;
+    }
+  }
+
+  .p-paginator {
+    background: $gris-claro;
+    border: none;
+    border-top: 2px solid $verde-campo;
+    padding: 1rem;
+
+    .p-paginator-current {
+      color: $gris;
+    }
+
+    .p-paginator-pages .p-paginator-page {
+      &.p-highlight {
+        background: $verde-campo;
+        border-color: $verde-campo;
+      }
+    }
+  }
+}
+
+// ============================================
+// Jugador Info (Avatar + Details)
+// ============================================
+.jugador-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.jugador-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid $verde-campo;
+}
+
+.jugador-avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: $gris-claro;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #dee2e6;
+
+  i {
+    font-size: 1.25rem;
+    color: $gris;
+  }
+}
+
+.jugador-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  strong {
+    color: #2c3e50;
+    font-size: 0.95rem;
+  }
+
+  small {
+    color: $gris;
+    font-size: 0.8rem;
+  }
+}
+
+// ============================================
+// Número Camiseta
+// ============================================
+.numero-camiseta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: $verde-campo;
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+// ============================================
+// Action Buttons
+// ============================================
+.action-buttons {
+  display: flex;
+  gap: 0.25rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+// ============================================
+// Empty State
+// ============================================
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  color: $gris;
+  margin-bottom: 1rem;
+}
+
+.empty-text {
+  font-size: 1.25rem;
+  color: $gris;
+  margin-bottom: 1.5rem;
+}
+
+// ============================================
+// Text Utilities
+// ============================================
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: $gris;
+  font-style: italic;
+}
+
+// ============================================
+// Width Utilities
+// ============================================
+.w-full {
+  width: 100%;
+}
+
+// ============================================
+// Margin Utilities
+// ============================================
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+// ============================================
+// Responsive
+// ============================================
+@media (max-width: 768px) {
+  .jugadores-list-container {
+    padding: 1rem;
+  }
+
+  .toolbar-title {
+    font-size: 1.25rem;
+  }
+
+  .toolbar-actions {
+    flex-direction: column;
+    width: 100%;
+
+    :host ::ng-deep .p-button {
+      width: 100%;
+    }
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  :host ::ng-deep {
+    .p-datatable {
+      font-size: 0.85rem;
+
+      .p-datatable-thead > tr > th,
+      .p-datatable-tbody > tr > td {
+        padding: 0.5rem;
+      }
+    }
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+}

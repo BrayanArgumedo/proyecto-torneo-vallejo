@@ -1,0 +1,295 @@
+<!-- src/app/features/jugadores/list/jugadores-list.component.html -->
+
+<div class="jugadores-list-container">
+  <!-- Toolbar -->
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <div class="toolbar-left">
+        <i class="pi pi-users toolbar-icon"></i>
+        <h2 class="toolbar-title">Gestión de Jugadores</h2>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <div class="toolbar-actions">
+        <p-button
+          label="Nuevo Jugador"
+          icon="pi pi-plus"
+          severity="success"
+          (onClick)="onCreate()"
+          styleClass="mr-2">
+        </p-button>
+
+        <p-button
+          icon="pi pi-file-excel"
+          severity="success"
+          [outlined]="true"
+          (onClick)="onExportExcel()"
+          pTooltip="Exportar a Excel"
+          tooltipPosition="bottom"
+          styleClass="mr-2">
+        </p-button>
+
+        <p-button
+          icon="pi pi-file-pdf"
+          severity="danger"
+          [outlined]="true"
+          (onClick)="onExportPDF()"
+          pTooltip="Exportar a PDF"
+          tooltipPosition="bottom">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-toolbar>
+
+  <!-- Filters Card -->
+  <p-card styleClass="mb-4">
+    <ng-template pTemplate="header">
+      <div class="filter-header">
+        <i class="pi pi-filter"></i>
+        <span>Filtros de Búsqueda</span>
+      </div>
+    </ng-template>
+
+    <div class="filter-grid">
+      <!-- Search -->
+      <div class="filter-item">
+        <label for="search">Buscar</label>
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            id="search"
+            [formControl]="searchControl"
+            placeholder="Nombre, cédula, email..."
+            class="w-full" />
+        </span>
+      </div>
+
+      <!-- Estado -->
+      <div class="filter-item">
+        <label for="estado">Estado Validación</label>
+        <p-dropdown
+          id="estado"
+          [formControl]="estadoFilter"
+          [options]="estadoOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccione estado"
+          styleClass="w-full">
+        </p-dropdown>
+      </div>
+
+      <!-- Posición -->
+      <div class="filter-item">
+        <label for="posicion">Posición</label>
+        <p-dropdown
+          id="posicion"
+          [formControl]="posicionFilter"
+          [options]="posicionOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccione posición"
+          styleClass="w-full">
+        </p-dropdown>
+      </div>
+
+      <!-- Clear Filters -->
+      <div class="filter-item filter-actions">
+        <p-button
+          label="Limpiar Filtros"
+          icon="pi pi-filter-slash"
+          severity="secondary"
+          [outlined]="true"
+          (onClick)="clearFilters()"
+          styleClass="w-full">
+        </p-button>
+      </div>
+    </div>
+  </p-card>
+
+  <!-- Data Table -->
+  <p-card>
+    <p-table
+      [value]="jugadores()"
+      [loading]="loading()"
+      [paginator]="true"
+      [rows]="rowsPerPage()"
+      [totalRecords]="totalRecords()"
+      [lazy]="true"
+      (onLazyLoad)="onPageChange($event)"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} jugadores"
+      styleClass="p-datatable-gridlines"
+      [tableStyle]="{ 'min-width': '60rem' }">
+
+      <!-- Empty Message -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="10" class="text-center">
+            <div class="empty-state">
+              <i class="pi pi-inbox empty-icon"></i>
+              <p class="empty-text">No se encontraron jugadores</p>
+              <p-button
+                label="Crear Primer Jugador"
+                icon="pi pi-plus"
+                severity="success"
+                (onClick)="onCreate()">
+              </p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Header -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">#</th>
+          <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+          <th>Cédula</th>
+          <th>Edad</th>
+          <th>Equipo</th>
+          <th>Posición</th>
+          <th># Camiseta</th>
+          <th>Estado</th>
+          <th style="width: 12rem">Acciones</th>
+        </tr>
+      </ng-template>
+
+      <!-- Body -->
+      <ng-template pTemplate="body" let-jugador let-rowIndex="rowIndex">
+        <tr>
+          <!-- Index -->
+          <td>{{ rowIndex + 1 + (currentPage() * rowsPerPage()) }}</td>
+
+          <!-- Nombre -->
+          <td>
+            <div class="jugador-info">
+              @if (jugador.foto) {
+                <img
+                  [src]="jugador.foto"
+                  [alt]="getNombreCompleto(jugador)"
+                  class="jugador-avatar" />
+              } @else {
+                <div class="jugador-avatar-placeholder">
+                  <i class="pi pi-user"></i>
+                </div>
+              }
+              <div class="jugador-details">
+                <strong>{{ getNombreCompleto(jugador) }}</strong>
+                @if (jugador.email) {
+                  <small>{{ jugador.email }}</small>
+                }
+              </div>
+            </div>
+          </td>
+
+          <!-- Cédula -->
+          <td>{{ jugador.cedula }}</td>
+
+          <!-- Edad -->
+          <td>{{ getEdad(jugador) }} años</td>
+
+          <!-- Equipo -->
+          <td>
+            @if (jugador.equipoId && typeof jugador.equipoId === 'object') {
+              {{ (jugador.equipoId as any).nombre }}
+            } @else {
+              <span class="text-muted">Sin equipo</span>
+            }
+          </td>
+
+          <!-- Posición -->
+          <td>
+            <p-tag
+              [value]="jugador.posicion"
+              [severity]="'info'">
+            </p-tag>
+          </td>
+
+          <!-- Número Camiseta -->
+          <td class="text-center">
+            <span class="numero-camiseta">{{ jugador.numeroCamiseta }}</span>
+          </td>
+
+          <!-- Estado -->
+          <td>
+            <p-tag
+              [value]="getEstadoBadge(jugador.estadoValidacion).label"
+              [severity]="getEstadoBadge(jugador.estadoValidacion).severity">
+            </p-tag>
+          </td>
+
+          <!-- Acciones -->
+          <td>
+            <div class="action-buttons">
+              <!-- Ver -->
+              <p-button
+                icon="pi pi-eye"
+                [rounded]="true"
+                [text]="true"
+                severity="info"
+                (onClick)="onView(jugador)"
+                pTooltip="Ver detalles"
+                tooltipPosition="top">
+              </p-button>
+
+              <!-- Editar -->
+              @if (canEdit(jugador)) {
+                <p-button
+                  icon="pi pi-pencil"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="warning"
+                  (onClick)="onEdit(jugador)"
+                  pTooltip="Editar"
+                  tooltipPosition="top">
+                </p-button>
+              }
+
+              <!-- Validar (Solo Admin y si está pendiente) -->
+              @if (canValidate() && jugador.estadoValidacion === 'PENDIENTE') {
+                <p-button
+                  icon="pi pi-check"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="success"
+                  (onClick)="onValidar(jugador)"
+                  pTooltip="Validar jugador"
+                  tooltipPosition="top">
+                </p-button>
+
+                <p-button
+                  icon="pi pi-times"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="danger"
+                  (onClick)="onRechazar(jugador)"
+                  pTooltip="Rechazar jugador"
+                  tooltipPosition="top">
+                </p-button>
+              }
+
+              <!-- Eliminar (Solo Admin) -->
+              @if (canDelete(jugador)) {
+                <p-button
+                  icon="pi pi-trash"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="danger"
+                  (onClick)="onDelete(jugador)"
+                  pTooltip="Eliminar"
+                  tooltipPosition="top">
+                </p-button>
+              }
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
+
+<!-- Confirm Dialog -->
+<p-confirmDialog></p-confirmDialog>

@@ -1,0 +1,336 @@
+<!-- src/app/features/jugadores/create-edit/jugador-form.component.html -->
+
+<div class="jugador-form-container">
+  <!-- Header -->
+  <div class="form-header">
+    <h2 class="form-title">
+      <i class="pi pi-user-plus"></i>
+      {{ isEditMode() ? 'Editar Jugador' : 'Nuevo Jugador' }}
+    </h2>
+    <p class="form-subtitle">
+      Complete el formulario con los datos del jugador. Los campos marcados con * son obligatorios.
+    </p>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+      <!-- ============================================ -->
+      <!-- SECCIÓN 1: DATOS PERSONALES -->
+      <!-- ============================================ -->
+      <p-card styleClass="form-section">
+        <ng-template pTemplate="header">
+          <div class="section-header">
+            <i class="pi pi-id-card"></i>
+            <span>Datos Personales</span>
+          </div>
+        </ng-template>
+
+        <div class="fields-grid">
+          <!-- Nombre -->
+          <div class="field">
+            <label for="nombre">Nombre *</label>
+            <input
+              pInputText
+              id="nombre"
+              formControlName="nombre"
+              placeholder="Ingrese el nombre"
+              [class.ng-invalid]="hasError('nombre')"
+              class="w-full" />
+            @if (getFieldError('nombre')) {
+              <small class="error-message">{{ getFieldError('nombre') }}</small>
+            }
+          </div>
+
+          <!-- Apellido -->
+          <div class="field">
+            <label for="apellido">Apellido *</label>
+            <input
+              pInputText
+              id="apellido"
+              formControlName="apellido"
+              placeholder="Ingrese el apellido"
+              [class.ng-invalid]="hasError('apellido')"
+              class="w-full" />
+            @if (getFieldError('apellido')) {
+              <small class="error-message">{{ getFieldError('apellido') }}</small>
+            }
+          </div>
+
+          <!-- Cédula -->
+          <div class="field">
+            <label for="cedula">Cédula *</label>
+            <input
+              pInputText
+              id="cedula"
+              formControlName="cedula"
+              placeholder="Número de cédula"
+              [class.ng-invalid]="hasError('cedula')"
+              class="w-full" />
+            @if (getFieldError('cedula')) {
+              <small class="error-message">{{ getFieldError('cedula') }}</small>
+            }
+          </div>
+
+          <!-- Fecha de Nacimiento -->
+          <div class="field">
+            <label for="fechaNacimiento">Fecha de Nacimiento *</label>
+            <p-calendar
+              inputId="fechaNacimiento"
+              formControlName="fechaNacimiento"
+              [showIcon]="true"
+              dateFormat="dd/mm/yy"
+              placeholder="Seleccione fecha"
+              [maxDate]="new Date()"
+              [yearRange]="'1960:' + new Date().getFullYear()"
+              [yearNavigator]="true"
+              [monthNavigator]="true"
+              styleClass="w-full">
+            </p-calendar>
+            @if (getFieldError('fechaNacimiento')) {
+              <small class="error-message">{{ getFieldError('fechaNacimiento') }}</small>
+            }
+            @if (getEdadActual()) {
+              <small class="info-message">Edad: {{ getEdadActual() }} años</small>
+            }
+          </div>
+
+          <!-- Celular -->
+          <div class="field">
+            <label for="celular">Celular *</label>
+            <p-inputMask
+              inputId="celular"
+              formControlName="celular"
+              mask="9999999999"
+              placeholder="3001234567"
+              styleClass="w-full">
+            </p-inputMask>
+            @if (getFieldError('celular')) {
+              <small class="error-message">{{ getFieldError('celular') }}</small>
+            }
+          </div>
+
+          <!-- Email -->
+          <div class="field">
+            <label for="email">Email</label>
+            <input
+              pInputText
+              id="email"
+              formControlName="email"
+              type="email"
+              placeholder="correo@ejemplo.com"
+              [class.ng-invalid]="hasError('email')"
+              class="w-full" />
+            @if (getFieldError('email')) {
+              <small class="error-message">{{ getFieldError('email') }}</small>
+            }
+          </div>
+
+          <!-- Dirección -->
+          <div class="field field-full">
+            <label for="direccion">Dirección</label>
+            <input
+              pInputText
+              id="direccion"
+              formControlName="direccion"
+              placeholder="Dirección de residencia"
+              class="w-full" />
+          </div>
+        </div>
+      </p-card>
+
+      <!-- ============================================ -->
+      <!-- SECCIÓN 2: DATOS DEPORTIVOS -->
+      <!-- ============================================ -->
+      <p-card styleClass="form-section">
+        <ng-template pTemplate="header">
+          <div class="section-header">
+            <i class="pi pi-shield"></i>
+            <span>Datos Deportivos</span>
+          </div>
+        </ng-template>
+
+        <div class="fields-grid">
+          <!-- Tipo de Jugador -->
+          <div class="field field-full">
+            <label for="tipo">Tipo de Jugador *</label>
+            <p-dropdown
+              inputId="tipo"
+              formControlName="tipo"
+              [options]="tipoJugadorOptions"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Seleccione tipo de jugador"
+              [showClear]="true"
+              styleClass="w-full">
+            </p-dropdown>
+            @if (getFieldError('tipo')) {
+              <small class="error-message">{{ getFieldError('tipo') }}</small>
+            }
+          </div>
+
+          <!-- Institución Educativa (condicional) -->
+          @if (form.get('tipo')?.value === 'ESTUDIANTE_IE_EL_DORADO') {
+            <div class="field field-full">
+              <label for="institucionEducativa">Institución Educativa *</label>
+              <input
+                pInputText
+                id="institucionEducativa"
+                formControlName="institucionEducativa"
+                placeholder="Nombre de la institución"
+                class="w-full" />
+              @if (getFieldError('institucionEducativa')) {
+                <small class="error-message">{{ getFieldError('institucionEducativa') }}</small>
+              }
+            </div>
+          }
+
+          <!-- Parentesco (condicional) -->
+          @if (
+            form.get('tipo')?.value === 'PADRE_IE_EL_DORADO' ||
+            form.get('tipo')?.value === 'PADRE_FUNDACION_VALLEJO'
+          ) {
+            <div class="field field-full">
+              <label for="parentescoEstudiante">Parentesco con Estudiante *</label>
+              <input
+                pInputText
+                id="parentescoEstudiante"
+                formControlName="parentescoEstudiante"
+                placeholder="Ej: Padre, Madre, Tutor"
+                class="w-full" />
+              @if (getFieldError('parentescoEstudiante')) {
+                <small class="error-message">{{ getFieldError('parentescoEstudiante') }}</small>
+              }
+            </div>
+          }
+
+          <!-- Equipo -->
+          <div class="field">
+            <label for="equipoId">Equipo *</label>
+            <p-dropdown
+              inputId="equipoId"
+              formControlName="equipoId"
+              [options]="equipoOptions()"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Seleccione equipo"
+              [disabled]="isDelegado()"
+              styleClass="w-full">
+            </p-dropdown>
+            @if (getFieldError('equipoId')) {
+              <small class="error-message">{{ getFieldError('equipoId') }}</small>
+            }
+            @if (isDelegado()) {
+              <small class="info-message">Equipo asignado automáticamente</small>
+            }
+          </div>
+
+          <!-- Posición -->
+          <div class="field">
+            <label for="posicion">Posición *</label>
+            <p-dropdown
+              inputId="posicion"
+              formControlName="posicion"
+              [options]="posicionOptions"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Seleccione posición"
+              styleClass="w-full">
+            </p-dropdown>
+            @if (getFieldError('posicion')) {
+              <small class="error-message">{{ getFieldError('posicion') }}</small>
+            }
+          </div>
+
+          <!-- Número de Camiseta -->
+          <div class="field">
+            <label for="numeroCamiseta">Número de Camiseta *</label>
+            <p-inputNumber
+              inputId="numeroCamiseta"
+              formControlName="numeroCamiseta"
+              [min]="1"
+              [max]="20"
+              [showButtons]="true"
+              placeholder="1-20"
+              styleClass="w-full">
+            </p-inputNumber>
+            @if (getFieldError('numeroCamiseta')) {
+              <small class="error-message">{{ getFieldError('numeroCamiseta') }}</small>
+            }
+            <small class="info-message">Números disponibles: 1 al 20</small>
+          </div>
+        </div>
+      </p-card>
+
+      <!-- ============================================ -->
+      <!-- SECCIÓN 3: FOTO DEL JUGADOR -->
+      <!-- ============================================ -->
+      <p-card styleClass="form-section">
+        <ng-template pTemplate="header">
+          <div class="section-header">
+            <i class="pi pi-camera"></i>
+            <span>Foto del Jugador</span>
+          </div>
+        </ng-template>
+
+        <div class="foto-upload-section">
+          <!-- Preview -->
+          @if (fotoPreview()) {
+            <div class="foto-preview">
+              <img [src]="fotoPreview()" alt="Preview" />
+              <p-button
+                icon="pi pi-times"
+                severity="danger"
+                [rounded]="true"
+                (onClick)="onFotoRemove()"
+                styleClass="remove-foto-btn">
+              </p-button>
+            </div>
+          }
+
+          <!-- Upload -->
+          @if (!fotoPreview()) {
+            <p-fileUpload
+              mode="basic"
+              name="foto"
+              accept="image/*"
+              [maxFileSize]="2000000"
+              [auto]="false"
+              chooseLabel="Seleccionar Foto"
+              chooseIcon="pi pi-upload"
+              (onSelect)="onFotoSelect($event)"
+              styleClass="w-full">
+            </p-fileUpload>
+            <small class="info-message">Tamaño máximo: 2MB. Formatos: JPG, PNG</small>
+          }
+        </div>
+      </p-card>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- ACTIONS -->
+    <!-- ============================================ -->
+    <div class="form-actions">
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        severity="secondary"
+        [outlined]="true"
+        (onClick)="onCancel()"
+        [disabled]="loading()">
+      </p-button>
+
+      <p-button
+        type="submit"
+        [label]="isEditMode() ? 'Actualizar' : 'Crear Jugador'"
+        icon="pi pi-check"
+        severity="success"
+        [loading]="loading()"
+        [disabled]="form.invalid || loading()">
+      </p-button>
+    </div>
+  </form>
+</div>
+
+<!-- Messages Toast -->
+<p-messages></p-messages>

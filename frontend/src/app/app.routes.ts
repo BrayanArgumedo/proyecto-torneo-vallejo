@@ -88,11 +88,40 @@ export const routes: Routes = [
             m => m.AdminDashboardComponent
           )
       },
-      // TODO: Agregar más rutas admin aquí
-      // {
-      //   path: 'usuarios',
-      //   loadComponent: () => import('...').then(m => m.UsuariosListComponent)
-      // },
+
+      // ============================================
+      // 👥 JUGADORES
+      // ============================================
+      {
+        path: 'jugadores',
+        loadComponent: () =>
+          import('./features/jugadores/list/jugadores-list.component').then(
+            m => m.JugadoresListComponent
+          )
+      },
+      {
+        path: 'jugadores/nuevo',
+        loadComponent: () =>
+          import('./features/jugadores/create-edit/jugador-form.component').then(
+            m => m.JugadorFormComponent
+          )
+      },
+      {
+        path: 'jugadores/:id',
+        loadComponent: () =>
+          import('./features/jugadores/detail/jugador-detail.component').then(
+            m => m.JugadorDetailComponent
+          )
+      },
+      {
+        path: 'jugadores/:id/editar',
+        loadComponent: () =>
+          import('./features/jugadores/create-edit/jugador-form.component').then(
+            m => m.JugadorFormComponent
+          )
+      },
+
+      // TODO: Agregar más rutas admin aquí (usuarios, equipos, torneos, etc.)
     ]
   },
 

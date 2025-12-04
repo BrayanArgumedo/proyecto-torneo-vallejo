@@ -1,0 +1,335 @@
+<!-- src/app/features/jugadores/detail/jugador-detail.component.html -->
+
+<div class="jugador-detail-container">
+  @if (jugador(); as jugador) {
+    <!-- Header Card with Photo -->
+    <p-card styleClass="header-card">
+      <div class="header-content">
+        <!-- Foto -->
+        <div class="foto-section">
+          @if (jugador.foto) {
+            <p-image
+              [src]="jugador.foto"
+              [alt]="getNombreCompleto()"
+              width="180"
+              [preview]="true"
+              styleClass="jugador-foto">
+            </p-image>
+          } @else {
+            <div class="foto-placeholder">
+              <i class="pi pi-user"></i>
+            </div>
+          }
+
+          <!-- Estado Badge -->
+          <p-tag
+            [value]="getEstadoBadge().label"
+            [severity]="getEstadoBadge().severity"
+            styleClass="estado-badge">
+          </p-tag>
+        </div>
+
+        <!-- Info -->
+        <div class="info-section">
+          <h1 class="jugador-nombre">{{ getNombreCompleto() }}</h1>
+          <div class="jugador-meta">
+            <div class="meta-item">
+              <i class="pi pi-id-card"></i>
+              <span>{{ jugador.cedula }}</span>
+            </div>
+            <div class="meta-item">
+              <i class="pi pi-calendar"></i>
+              <span>{{ getEdad() }} años</span>
+            </div>
+            <div class="meta-item">
+              <i class="pi pi-shield"></i>
+              <span>{{ getEquipoNombre() }}</span>
+            </div>
+            <div class="meta-item">
+              <i class="pi pi-hashtag"></i>
+              <span>Camiseta #{{ jugador.numeroCamiseta }}</span>
+            </div>
+          </div>
+
+          <!-- Posicion -->
+          <div class="posicion-tag">
+            <p-tag [value]="jugador.posicion" severity="info" [rounded]="true"></p-tag>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions-section">
+          <p-button
+            icon="pi pi-arrow-left"
+            label="Volver"
+            severity="secondary"
+            [outlined]="true"
+            (onClick)="onBack()">
+          </p-button>
+
+          @if (canEdit()) {
+            <p-button
+              icon="pi pi-pencil"
+              label="Editar"
+              severity="warning"
+              (onClick)="onEdit()">
+            </p-button>
+          }
+
+          @if (canValidate() && jugador.estadoValidacion === 'PENDIENTE') {
+            <p-button
+              icon="pi pi-check"
+              label="Validar"
+              severity="success"
+              (onClick)="onValidar()">
+            </p-button>
+
+            <p-button
+              icon="pi pi-times"
+              label="Rechazar"
+              severity="danger"
+              (onClick)="onRechazar()">
+            </p-button>
+          }
+
+          @if (canDelete()) {
+            <p-button
+              icon="pi pi-trash"
+              label="Eliminar"
+              severity="danger"
+              [outlined]="true"
+              (onClick)="onDelete()">
+            </p-button>
+          }
+
+          @if (jugador.estadoValidacion === 'VALIDADO') {
+            <p-button
+              icon="pi pi-download"
+              label="Credencial"
+              severity="info"
+              (onClick)="onDownloadCredencial()">
+            </p-button>
+          }
+        </div>
+      </div>
+    </p-card>
+
+    <div class="detail-grid">
+      <!-- Datos Personales -->
+      <p-card styleClass="detail-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <i class="pi pi-user"></i>
+            <span>Datos Personales</span>
+          </div>
+        </ng-template>
+
+        <div class="data-grid">
+          <div class="data-item">
+            <span class="data-label">Nombre:</span>
+            <span class="data-value">{{ jugador.nombre }}</span>
+          </div>
+
+          <div class="data-item">
+            <span class="data-label">Apellido:</span>
+            <span class="data-value">{{ jugador.apellido }}</span>
+          </div>
+
+          <div class="data-item">
+            <span class="data-label">Cédula:</span>
+            <span class="data-value">{{ jugador.cedula }}</span>
+          </div>
+
+          <div class="data-item">
+            <span class="data-label">Fecha de Nacimiento:</span>
+            <span class="data-value">{{ formatDate(jugador.fechaNacimiento) }}</span>
+          </div>
+
+          <div class="data-item">
+            <span class="data-label">Edad:</span>
+            <span class="data-value">{{ getEdad() }} años</span>
+          </div>
+
+          <div class="data-item">
+            <span class="data-label">Celular:</span>
+            <span class="data-value">{{ jugador.celular }}</span>
+          </div>
+
+          @if (jugador.email) {
+            <div class="data-item">
+              <span class="data-label">Email:</span>
+              <span class="data-value">{{ jugador.email }}</span>
+            </div>
+          }
+
+          @if (jugador.direccion) {
+            <div class="data-item data-item-full">
+              <span class="data-label">Dirección:</span>
+              <span class="data-value">{{ jugador.direccion }}</span>
+            </div>
+          }
+        </div>
+      </p-card>
+
+      <!-- Datos Deportivos -->
+      <p-card styleClass="detail-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <i class="pi pi-shield"></i>
+            <span>Datos Deportivos</span>
+          </div>
+        </ng-template>
+
+        <div class="data-grid">
+          <div class="data-item">
+            <span class="data-label">Tipo de Jugador:</span>
+            <span class="data-value">{{ jugador.tipo }}</span>
+          </div>
+
+          <div class="data-item">
+            <span class="data-label">Equipo:</span>
+            <span class="data-value">{{ getEquipoNombre() }}</span>
+          </div>
+
+          <div class="data-item">
+            <span class="data-label">Posición:</span>
+            <span class="data-value">{{ jugador.posicion }}</span>
+          </div>
+
+          <div class="data-item">
+            <span class="data-label">Número de Camiseta:</span>
+            <span class="data-value numero-destacado">#{{ jugador.numeroCamiseta }}</span>
+          </div>
+
+          @if (jugador.institucionEducativa) {
+            <div class="data-item data-item-full">
+              <span class="data-label">Institución Educativa:</span>
+              <span class="data-value">{{ jugador.institucionEducativa }}</span>
+            </div>
+          }
+
+          @if (jugador.parentescoEstudiante) {
+            <div class="data-item data-item-full">
+              <span class="data-label">Parentesco:</span>
+              <span class="data-value">{{ jugador.parentescoEstudiante }}</span>
+            </div>
+          }
+        </div>
+      </p-card>
+
+      <!-- Documentos -->
+      <p-card styleClass="detail-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <i class="pi pi-file"></i>
+            <span>Documentos ({{ getDocumentosCount() }})</span>
+          </div>
+        </ng-template>
+
+        @if (hasDocuments()) {
+          <div class="documentos-list">
+            @for (doc of jugador.documentos; track doc.url) {
+              <div class="documento-item">
+                <i class="pi pi-file-pdf"></i>
+                <span class="documento-nombre">{{ doc.nombre || 'Documento' }}</span>
+                <p-button
+                  icon="pi pi-download"
+                  severity="secondary"
+                  [rounded]="true"
+                  [text]="true"
+                  pTooltip="Descargar"
+                  (onClick)="window.open(doc.url, '_blank')">
+                </p-button>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty-state-small">
+            <i class="pi pi-inbox"></i>
+            <p>No hay documentos cargados</p>
+          </div>
+        }
+
+        @if (canUploadDocuments()) {
+          <p-divider></p-divider>
+          <p-button
+            label="Cargar Documentos"
+            icon="pi pi-upload"
+            severity="info"
+            [outlined]="true"
+            (onClick)="onUploadDocuments()"
+            styleClass="w-full">
+          </p-button>
+        }
+      </p-card>
+
+      <!-- Timeline de Validación -->
+      <p-card styleClass="detail-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <i class="pi pi-history"></i>
+            <span>Historial de Validación</span>
+          </div>
+        </ng-template>
+
+        <p-timeline [value]="getTimelineEvents()" align="left">
+          <ng-template pTemplate="content" let-event>
+            <div class="timeline-content">
+              <strong [style.color]="event.color">{{ event.status }}</strong>
+              <small>{{ formatDateTime(event.date) }}</small>
+              @if (event.motivo) {
+                <p class="motivo-rechazo">
+                  <strong>Motivo:</strong> {{ event.motivo }}
+                </p>
+              }
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="marker" let-event>
+            <span
+              class="timeline-marker"
+              [style.background-color]="event.color">
+              <i [class]="event.icon"></i>
+            </span>
+          </ng-template>
+        </p-timeline>
+      </p-card>
+
+      <!-- Info del Sistema -->
+      <p-card styleClass="detail-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <i class="pi pi-info-circle"></i>
+            <span>Información del Sistema</span>
+          </div>
+        </ng-template>
+
+        <div class="data-grid">
+          <div class="data-item">
+            <span class="data-label">ID:</span>
+            <span class="data-value">{{ jugador._id }}</span>
+          </div>
+
+          <div class="data-item">
+            <span class="data-label">Creado:</span>
+            <span class="data-value">{{ formatDateTime(jugador.createdAt) }}</span>
+          </div>
+
+          <div class="data-item data-item-full">
+            <span class="data-label">Última Actualización:</span>
+            <span class="data-value">{{ formatDateTime(jugador.updatedAt) }}</span>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  } @else {
+    <!-- Loading State -->
+    <div class="loading-state">
+      <i class="pi pi-spin pi-spinner loading-icon"></i>
+      <p>Cargando información del jugador...</p>
+    </div>
+  }
+</div>
+
+<!-- Confirm Dialog -->
+<p-confirmDialog></p-confirmDialog>
