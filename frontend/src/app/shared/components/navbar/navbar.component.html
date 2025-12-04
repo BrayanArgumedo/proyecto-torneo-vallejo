@@ -1,0 +1,41 @@
+<!--src/app/shared/components/navbar/navbar.component.html-->
+
+<p-toolbar styleClass="navbar-toolbar">
+  <!-- Left side: Menu toggle + Logo -->
+  <ng-template pTemplate="start">
+    <div class="navbar-left">
+      <p-button
+        icon="pi pi-bars"
+        styleClass="p-button-text p-button-rounded"
+        (onClick)="onMenuToggle()"
+        class="menu-toggle-btn">
+      </p-button>
+      
+      <div class="logo-section">
+        <i class="pi pi-trophy logo-icon"></i>
+        <div class="logo-text">
+          <span class="logo-title">Torneo Vallejo</span>
+          <span class="logo-subtitle">Sistema de Gestión</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Right side: User menu -->
+  <ng-template pTemplate="end">
+    <div class="navbar-right">
+      <div class="user-info">
+        <span class="user-name">{{ authService.fullName() }}</span>
+        <span class="user-role">{{ authService.currentUser()?.rol }}</span>
+      </div>
+
+      <p-button
+        [label]="getUserInitials()"
+        styleClass="p-button-rounded p-button-success user-avatar-btn"
+        (onClick)="menu.toggle($event)">
+      </p-button>
+
+      <p-menu #menu [model]="userMenuItems" [popup]="true"></p-menu>
+    </div>
+  </ng-template>
+</p-toolbar>

@@ -1,0 +1,425 @@
+//src/app/features/public-view/landing-page/landing-page.component.scss
+
+.landing-page {
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+// ============================================
+// 🏆 HERO SECTION
+// ============================================
+
+.hero-section {
+  background: linear-gradient(135deg, #1e7e34 0%, #28a745 100%);
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      rgba(0, 0, 0, 0.05) 40px,
+      rgba(0, 0, 0, 0.05) 80px
+    );
+  padding: 5rem 2rem;
+  text-align: center;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+  }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-icon {
+  font-size: 5rem;
+  color: #ffc107;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  margin-bottom: 1.5rem;
+  animation: bounce 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+.hero-title {
+  color: white;
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0 0 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  color: #ffc107;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-description {
+  color: white;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin: 0 0 2.5rem;
+  max-width: 600px;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+// ============================================
+// 🔨 ESTILOS FORZADOS PARA BOTONES DEL HERO
+// ============================================
+
+:host ::ng-deep {
+  .hero-actions {
+    // Resetear cualquier padding/margin del contenedor
+    margin: 0 !important;
+    padding: 0 !important;
+    
+    // Cada p-button es inline-flex
+    > p-button {
+      display: inline-flex !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      
+      // El botón interno también
+      > .p-element {
+        margin: 0 !important;
+      }
+      
+      // Botón Success (Ver Equipos)
+      .p-button.p-button-success {
+        background: #ffc107 !important;
+        border: 2px solid #ffc107 !important;
+        color: #1e7e34 !important;
+        box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+        font-weight: 700 !important;
+        padding: 0.875rem 2rem !important;
+        margin: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        
+        .p-button-label {
+          color: #1e7e34 !important;
+        }
+        
+        .p-button-icon {
+          color: #1e7e34 !important;
+        }
+        
+        &:hover {
+          background: darken(#ffc107, 5%) !important;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(255, 193, 7, 0.5);
+        }
+      }
+      
+      // Botón Outlined (Ver Calendario) - Igual al de Ver Equipos
+      .p-button.p-button-outlined {
+        background: #ffc107 !important;
+        border: 2px solid #ffc107 !important;
+        color: #1e7e34 !important;
+        box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+        font-weight: 700 !important;
+        padding: 0.875rem 2rem !important;
+        margin: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        .p-button-label {
+          color: #1e7e34 !important;
+        }
+
+        .p-button-icon {
+          color: #1e7e34 !important;
+        }
+
+        &:hover {
+          background: darken(#ffc107, 5%) !important;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(255, 193, 7, 0.5);
+        }
+      }
+    }
+  }
+}
+
+// ============================================
+// ℹ️ INFO SECTION
+// ============================================
+
+.info-section {
+  padding: 5rem 2rem;
+  background: white;
+}
+
+.section-title {
+  text-align: center;
+  color: #1e7e34;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 3rem;
+  text-transform: uppercase;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+:host ::ng-deep {
+  .info-card {
+    border: 2px solid #e9ecef;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      border-color: #ffc107;
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+    
+    .p-card-header {
+      padding: 2rem 2rem 0;
+    }
+    
+    .p-card-body {
+      padding: 1.5rem 2rem 2rem;
+    }
+  }
+}
+
+.card-icon-wrapper {
+  text-align: center;
+  
+  .card-icon {
+    font-size: 3.5rem;
+    color: #1e7e34;
+    background: linear-gradient(135deg, rgba(30, 126, 52, 0.1) 0%, rgba(40, 167, 69, 0.1) 100%);
+    width: 100px;
+    height: 100px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 3px solid #ffc107;
+  }
+}
+
+.info-card {
+  h3 {
+    color: #1e7e34;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    text-align: center;
+  }
+  
+  p {
+    color: #6c757d;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+// ============================================
+// 📣 CTA SECTION
+// ============================================
+
+.cta-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 5rem 2rem;
+}
+
+.cta-content {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-title {
+  color: #1e7e34;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 1rem;
+}
+
+.cta-description {
+  color: #6c757d;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin: 0 0 2.5rem;
+}
+
+// ✅ ESTILOS ESPECÍFICOS PARA EL BOTÓN DEL CTA
+:host ::ng-deep {
+  .cta-content {
+    .p-button-warning {
+      background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%) !important;
+      border: none !important;
+      color: #1e7e34 !important;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+      padding: 0.875rem 2rem !important; // ✅ AJUSTAR PADDING
+      margin: 0 auto !important; // ✅ CENTRAR
+      display: inline-flex !important; // ✅ AGREGAR
+      
+      .p-button-label {
+        color: #1e7e34 !important;
+      }
+      
+      .p-button-icon {
+        color: #1e7e34 !important;
+      }
+      
+      &:hover {
+        background: linear-gradient(135deg, darken(#ffc107, 5%) 0%, darken(#ffb300, 5%) 100%) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 193, 7, 0.5);
+      }
+    }
+  }
+}
+
+// ============================================
+// 🎬 ANIMACIONES
+// ============================================
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+// ============================================
+// 📱 RESPONSIVE
+// ============================================
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 1rem;
+  }
+  
+  .hero-icon {
+    font-size: 3.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+  }
+  
+  .info-section {
+    padding: 3rem 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.875rem;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cta-section {
+    padding: 3rem 1rem;
+  }
+  
+  .cta-title {
+    font-size: 1.875rem;
+  }
+}
+
+// ============================================
+// 🔨 FORZAR ESTILOS DE BOTONES (MÁS AGRESIVO)
+// ============================================
+
+:host ::ng-deep {
+  // Todos los botones dentro de hero-actions
+  .hero-actions p-button {
+    display: inline-block;
+    
+    .p-button {
+      margin: 0 !important;
+      min-width: 200px;
+    }
+  }
+  
+  // Todos los botones dentro de cta-content
+  .cta-content p-button {
+    display: inline-block;
+    margin: 0 auto;
+    
+    .p-button {
+      margin: 0 auto !important;
+    }
+  }
+  
+  // Forzar centrado de todos los elementos p-button
+  p-button {
+    .p-element {
+      display: inline-flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+  }
+}

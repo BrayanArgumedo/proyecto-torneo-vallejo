@@ -1,0 +1,259 @@
+//src/app/layouts/public-layout/public-layout.component.scss
+
+.public-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+// ============================================
+// 🎨 NAVBAR PÚBLICO
+// ============================================
+
+:host ::ng-deep {
+  .public-navbar {
+    background: linear-gradient(135deg, #1e7e34 0%, #28a745 100%);
+    border: none;
+    border-bottom: 3px solid #ffc107;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  
+  .brand-icon {
+    font-size: 2.5rem;
+    color: #ffc107;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+  
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    
+    .brand-title {
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1.2;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    .brand-subtitle {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.8125rem;
+      font-weight: 600;
+    }
+  }
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+  
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: all 0.3s ease;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: #ffc107;
+      transition: width 0.3s ease;
+    }
+    
+    &:hover {
+      color: #ffc107;
+      
+      &::after {
+        width: 100%;
+      }
+    }
+    
+    &.active {
+      color: #ffc107;
+      
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.navbar-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+:host ::ng-deep {
+  // Botón "Iniciar Sesión" (texto blanco)
+  .navbar-actions .p-button.p-button-text.p-button-plain {
+    color: white !important;
+    background: transparent !important;
+    border: none !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+
+    .p-button-label {
+      color: white !important;
+      font-weight: 600 !important;
+    }
+
+    .p-button-icon {
+      color: white !important;
+    }
+
+    &:enabled:hover {
+      background: rgba(255, 255, 255, 0.15) !important;
+      color: white !important;
+      transform: translateY(-1px);
+
+      .p-button-label,
+      .p-button-icon {
+        color: white !important;
+      }
+    }
+
+    &:enabled:active {
+      transform: translateY(0);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.3) !important;
+    }
+  }
+
+  // Botón "Registro" (amarillo)
+  .navbar-actions .p-button.p-button-success {
+    background: #ffc107 !important;
+    border: 2px solid #ffc107 !important;
+    color: #1e7e34 !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    padding: 0.625rem 1.5rem !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3) !important;
+
+    .p-button-label {
+      color: #1e7e34 !important;
+      font-weight: 700 !important;
+    }
+
+    .p-button-icon {
+      color: #1e7e34 !important;
+    }
+
+    &:enabled:hover {
+      background: #e6ad06 !important;
+      border-color: #e6ad06 !important;
+      color: #1e7e34 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(255, 193, 7, 0.5) !important;
+
+      .p-button-label,
+      .p-button-icon {
+        color: #1e7e34 !important;
+      }
+    }
+
+    &:enabled:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3) !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5) !important;
+    }
+  }
+}
+
+// ============================================
+// 📄 CONTENIDO
+// ============================================
+
+.public-content {
+  flex: 1;
+  background: #f8f9fa;
+}
+
+// ============================================
+// 📄 FOOTER
+// ============================================
+
+.public-footer {
+  background: linear-gradient(135deg, #1e7e34 0%, #28a745 100%);
+  border-top: 3px solid #ffc107;
+  padding: 2rem;
+  
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .footer-section {
+    .footer-icon {
+      font-size: 2rem;
+      color: #ffc107;
+      margin-bottom: 0.75rem;
+    }
+    
+    .footer-text {
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
+    
+    .footer-subtext {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.875rem;
+      margin: 0;
+    }
+  }
+}
+
+// ============================================
+// 📱 RESPONSIVE
+// ============================================
+
+@media (max-width: 991px) {
+  .navbar-links {
+    display: none;
+  }
+  
+  :host ::ng-deep .public-navbar {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand {
+    .brand-subtitle {
+      display: none;
+    }
+  }
+  
+  .navbar-actions {
+    gap: 0.5rem;
+    
+    ::ng-deep .p-button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+  }
+}

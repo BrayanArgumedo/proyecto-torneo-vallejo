@@ -1,0 +1,95 @@
+<!--src/app/features/public-view/landing-page/landing-page.component.html-->
+
+<div class="landing-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <i class="pi pi-trophy hero-icon"></i>
+      <h1 class="hero-title">Torneo de Microfútbol</h1>
+      <h2 class="hero-subtitle">Urbanización Vallejo 2024</h2>
+      <p class="hero-description">
+        Torneo recreativo de microfútbol para residentes y familias de la Urbanización Vallejo
+      </p>
+      <div class="hero-actions">
+        <p-button
+          label="Ver Equipos"
+          icon="pi pi-shield"
+          styleClass="p-button-lg p-button-success"
+          routerLink="/equipos">
+        </p-button>
+        <p-button
+          label="Ver Calendario"
+          icon="pi pi-calendar"
+          styleClass="p-button-lg p-button-outlined"
+          routerLink="/calendario">
+        </p-button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Info Section -->
+  <section class="info-section">
+    <div class="container">
+      <h2 class="section-title">Sobre el Torneo</h2>
+      
+      <div class="info-grid">
+        <p-card styleClass="info-card">
+          <ng-template pTemplate="header">
+            <div class="card-icon-wrapper">
+              <i class="pi pi-users card-icon"></i>
+            </div>
+          </ng-template>
+          <h3>Participación Comunitaria</h3>
+          <p>
+            Torneo recreativo abierto a todos los residentes, propietarios, 
+            docentes y trabajadores de instituciones educativas vinculadas.
+          </p>
+        </p-card>
+
+        <p-card styleClass="info-card">
+          <ng-template pTemplate="header">
+            <div class="card-icon-wrapper">
+              <i class="pi pi-calendar card-icon"></i>
+            </div>
+          </ng-template>
+          <h3>Formato Flexible</h3>
+          <p>
+            Sistema de fases configurables: Liga, Grupos y Eliminación Directa 
+            para garantizar competencia equilibrada.
+          </p>
+        </p-card>
+
+        <p-card styleClass="info-card">
+          <ng-template pTemplate="header">
+            <div class="card-icon-wrapper">
+              <i class="pi pi-shield card-icon"></i>
+            </div>
+          </ng-template>
+          <h3>Equipos Validados</h3>
+          <p>
+            Cada equipo pasa por un proceso de validación documental para 
+            garantizar el cumplimiento del reglamento.
+          </p>
+        </p-card>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">¿Tienes un equipo?</h2>
+        <p class="cta-description">
+          Regístrate como delegado e inscribe a tu equipo en el torneo
+        </p>
+        <p-button
+          label="Registrarse Ahora"
+          icon="pi pi-user-plus"
+          styleClass="p-button-lg p-button-warning"
+          routerLink="/registro">
+        </p-button>
+      </div>
+    </div>
+  </section>
+</div>

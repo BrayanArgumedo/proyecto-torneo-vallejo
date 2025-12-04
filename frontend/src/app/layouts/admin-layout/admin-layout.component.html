@@ -1,0 +1,29 @@
+<!--src/app/layouts/admin-layout/admin-layout.component.html-->
+
+<div class="admin-layout">
+  <!-- Navbar -->
+  <app-navbar (menuToggle)="toggleSidebar()"></app-navbar>
+
+  <div class="layout-content">
+    <!-- Sidebar para desktop -->
+    @if (!isMobile()) {
+      <aside class="sidebar-wrapper" [class.sidebar-collapsed]="!sidebarVisible()">
+        <app-sidebar></app-sidebar>
+      </aside>
+    }
+
+    <!-- Sidebar móvil (overlay) - TODO: Implementar con PrimeNG Drawer o Dialog -->
+    @if (isMobile()) {
+      <aside class="sidebar-wrapper sidebar-mobile" [class.sidebar-collapsed]="!sidebarVisible()">
+        <app-sidebar></app-sidebar>
+      </aside>
+    }
+
+    <!-- Main content -->
+    <main class="main-content" [class.sidebar-collapsed]="!sidebarVisible() && !isMobile()">
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>

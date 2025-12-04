@@ -1,0 +1,66 @@
+<!--src/app/layouts/public-layout/public-layout.component.ts-->
+
+<div class="public-layout">
+  <!-- Navbar Público -->
+  <p-toolbar styleClass="public-navbar">
+    <ng-template pTemplate="start">
+      <div class="navbar-brand">
+        <i class="pi pi-trophy brand-icon"></i>
+        <div class="brand-text">
+          <span class="brand-title">Torneo Vallejo</span>
+          <span class="brand-subtitle">Microfútbol 2024</span>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="center">
+      <div class="navbar-links">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          Inicio
+        </a>
+        <a routerLink="/equipos" routerLinkActive="active">
+          Equipos
+        </a>
+        <a routerLink="/calendario" routerLinkActive="active">
+          Calendario
+        </a>
+        <a routerLink="/tablas" routerLinkActive="active">
+          Tablas
+        </a>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+      <div class="navbar-actions">
+        <p-button
+          label="Iniciar Sesión"
+          icon="pi pi-sign-in"
+          styleClass="p-button-text p-button-plain"
+          routerLink="/login">
+        </p-button>
+        <p-button
+          label="Registro"
+          icon="pi pi-user-plus"
+          styleClass="p-button-success"
+          routerLink="/registro">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-toolbar>
+
+  <!-- Contenido Principal -->
+  <main class="public-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="public-footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <i class="pi pi-shield footer-icon"></i>
+        <p class="footer-text">© 2024 Torneo de Microfútbol</p>
+        <p class="footer-subtext">Urbanización Vallejo</p>
+      </div>
+    </div>
+  </footer>
+</div>

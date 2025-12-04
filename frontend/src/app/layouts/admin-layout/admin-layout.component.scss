@@ -1,0 +1,67 @@
+//src/app/layouts/admin-layout/admin-layout.component.scss
+
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.layout-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar-wrapper {
+  width: 280px;
+  transition: all 0.3s ease;
+  overflow-y: auto;
+  flex-shrink: 0;
+  
+  &.sidebar-collapsed {
+    width: 0;
+    overflow: hidden;
+  }
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+  
+  &.sidebar-collapsed {
+    margin-left: 0;
+  }
+}
+
+.content-wrapper {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// Sidebar móvil
+:host ::ng-deep {
+  .sidebar-mobile {
+    width: 280px !important;
+    
+    .p-sidebar-content {
+      padding: 0;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 991px) {
+  .content-wrapper {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .content-wrapper {
+    padding: 0.75rem;
+  }
+}

@@ -1,0 +1,93 @@
+//src/app/shared/components/sidebar/sidebar.component.scss
+
+.sidebar-container {
+  height: 100%;
+  background: white;
+  border-right: 3px solid #ffc107;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-bottom: 2px solid #ffc107;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  
+  .header-icon {
+    font-size: 1.75rem;
+    color: #1e7e34;
+  }
+  
+  .header-title {
+    margin: 0;
+    color: #1e7e34;
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+:host ::ng-deep {
+  .sidebar-menu {
+    border: none;
+    width: 100%;
+    padding: 0.5rem;
+    
+    .p-menuitem {
+      margin-bottom: 0.25rem;
+    }
+    
+    .p-menuitem-link {
+      padding: 0.875rem 1rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: #e8f5e9;
+      }
+      
+      &.router-link-active {
+        background: linear-gradient(135deg, #1e7e34 0%, #28a745 100%);
+        color: white;
+        font-weight: 600;
+        
+        .p-menuitem-icon {
+          color: #ffc107;
+        }
+      }
+    }
+    
+    .p-menuitem-icon {
+      color: #1e7e34;
+      font-size: 1.125rem;
+      margin-right: 0.75rem;
+    }
+    
+    .p-menuitem-text {
+      font-weight: 500;
+    }
+    
+    .p-submenu-header {
+      padding: 1rem 1rem 0.5rem;
+      background: transparent;
+      color: #6c757d;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .p-menu-separator {
+      border-top: 1px solid #dee2e6;
+      margin: 0.5rem 0;
+    }
+    
+    .p-badge {
+      margin-left: auto;
+    }
+  }
+}
