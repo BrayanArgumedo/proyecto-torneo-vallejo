@@ -155,14 +155,14 @@ $azul: #007bff;
 // ============================================
 :host ::ng-deep {
   input.ng-invalid.ng-touched,
-  .p-dropdown.ng-invalid.ng-touched,
-  .p-calendar.ng-invalid.ng-touched {
+  .p-select.ng-invalid.ng-touched,
+  .p-datepicker.ng-invalid.ng-touched {
     border-color: $rojo;
   }
 
   .p-inputtext,
-  .p-dropdown,
-  .p-calendar input {
+  .p-select,
+  .p-datepicker input {
     border-radius: 8px;
   }
 
@@ -175,7 +175,7 @@ $azul: #007bff;
     }
   }
 
-  .p-calendar {
+  .p-datepicker {
     width: 100%;
 
     input {

@@ -12,9 +12,14 @@ export interface Jugador {
   cedula: string;
   fechaNacimiento: string;
   telefono: string;
+  celular: string; // Alias para telefono
   email?: string;
   direccion: string;
   foto?: string;  // URL de Cloudinary
+
+  // Campos opcionales según tipo
+  institucionEducativa?: string;
+  parentescoEstudiante?: string;
 
   // Datos deportivos
   posicion: PosicionJugador;
@@ -30,6 +35,7 @@ export interface Jugador {
   // Validación
   estadoValidacion: EstadoValidacionJugador;
   observaciones?: string;
+  motivoRechazo?: string; // Motivo de rechazo si fue rechazado
   validadoPor?: string;  // ID del admin que validó
   fechaValidacion?: string;
 
@@ -47,6 +53,7 @@ export interface Jugador {
 export interface Documento {
   tipo: TipoDocumento;
   url: string;
+  nombre?: string; // Nombre del documento
   nombreArchivo: string;
   uploadedAt: string;
 }

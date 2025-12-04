@@ -69,7 +69,7 @@
       <!-- Estado -->
       <div class="filter-item">
         <label for="estado">Estado Validación</label>
-        <p-dropdown
+        <p-select
           id="estado"
           [formControl]="estadoFilter"
           [options]="estadoOptions"
@@ -77,13 +77,13 @@
           optionValue="value"
           placeholder="Seleccione estado"
           styleClass="w-full">
-        </p-dropdown>
+        </p-select>
       </div>
 
       <!-- Posición -->
       <div class="filter-item">
         <label for="posicion">Posición</label>
-        <p-dropdown
+        <p-select
           id="posicion"
           [formControl]="posicionFilter"
           [options]="posicionOptions"
@@ -91,7 +91,7 @@
           optionValue="value"
           placeholder="Seleccione posición"
           styleClass="w-full">
-        </p-dropdown>
+        </p-select>
       </div>
 
       <!-- Clear Filters -->

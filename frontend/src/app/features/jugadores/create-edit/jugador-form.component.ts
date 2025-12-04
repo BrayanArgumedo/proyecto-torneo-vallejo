@@ -17,11 +17,10 @@ import {
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
-import { CalendarModule } from 'primeng/calendar';
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MessageModule } from 'primeng/message';
-import { MessagesModule } from 'primeng/messages';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -43,11 +42,10 @@ import { of, Observable } from 'rxjs';
     CardModule,
     InputTextModule,
     ButtonModule,
-    DropdownModule,
-    CalendarModule,
+    SelectModule,
+    DatePickerModule,
     InputMaskModule,
     MessageModule,
-    MessagesModule,
     InputNumberModule,
     FileUploadModule,
     ProgressBarModule
@@ -83,18 +81,18 @@ export class JugadorFormComponent implements OnInit {
   // ============================================
   tipoJugadorOptions = [
     { label: 'Habitante Propietario', value: TipoJugador.HABITANTE_PROPIETARIO },
-    { label: 'Habitante Hijo de Propietario', value: TipoJugador.HABITANTE_HIJO_PROPIETARIO },
+    { label: 'Habitante Hijo de Propietario', value: TipoJugador.HABITANTE_HIJO },
     { label: 'Habitante Arrendatario', value: TipoJugador.HABITANTE_ARRENDATARIO },
-    { label: 'Docente I.E. El Dorado', value: TipoJugador.DOCENTE_IE_EL_DORADO },
-    { label: 'Trabajador I.E. El Dorado', value: TipoJugador.TRABAJADOR_IE_EL_DORADO },
-    { label: 'Estudiante I.E. El Dorado', value: TipoJugador.ESTUDIANTE_IE_EL_DORADO },
-    { label: 'Padre I.E. El Dorado', value: TipoJugador.PADRE_IE_EL_DORADO },
-    { label: 'Docente Fundación Vallejo', value: TipoJugador.DOCENTE_FUNDACION_VALLEJO },
-    { label: 'Trabajador Fundación Vallejo', value: TipoJugador.TRABAJADOR_FUNDACION_VALLEJO },
-    { label: 'Padre Fundación Vallejo', value: TipoJugador.PADRE_FUNDACION_VALLEJO },
-    { label: 'Extranjero afiliado I.E. El Dorado', value: TipoJugador.EXTRANJERO_AFILIADO_IE },
-    { label: 'Extranjero afiliado Fundación Vallejo', value: TipoJugador.EXTRANJERO_AFILIADO_FUNDACION },
-    { label: 'Extranjero libre', value: TipoJugador.EXTRANJERO_LIBRE }
+    { label: 'Docente I.E. El Dorado', value: TipoJugador.DOCENTE_ELDORADO },
+    { label: 'Trabajador I.E. El Dorado', value: TipoJugador.TRABAJADOR_ELDORADO },
+    { label: 'Estudiante I.E. El Dorado', value: TipoJugador.ESTUDIANTE_ELDORADO },
+    { label: 'Padre I.E. El Dorado', value: TipoJugador.PADRE_ELDORADO },
+    { label: 'Docente Fundación Vallejo', value: TipoJugador.DOCENTE_FUNDACION },
+    { label: 'Trabajador Fundación Vallejo', value: TipoJugador.TRABAJADOR_FUNDACION },
+    { label: 'Padre Fundación Vallejo', value: TipoJugador.PADRE_FUNDACION },
+    { label: 'Extranjero afiliado I.E. El Dorado', value: TipoJugador.EXTRANJERO_ELDORADO },
+    { label: 'Extranjero afiliado Fundación Vallejo', value: TipoJugador.EXTRANJERO_FUNDACION },
+    { label: 'Extranjero libre', value: TipoJugador.EXTRANJERO_HABITANTE }
   ];
 
   posicionOptions = [
@@ -316,14 +314,14 @@ export class JugadorFormComponent implements OnInit {
     parentescoControl?.clearValidators();
 
     // Estudiantes requieren institución
-    if (tipo === TipoJugador.ESTUDIANTE_IE_EL_DORADO) {
+    if (tipo === TipoJugador.ESTUDIANTE_ELDORADO) {
       institucionControl?.setValidators([Validators.required]);
     }
 
     // Padres requieren parentesco
     if (
-      tipo === TipoJugador.PADRE_IE_EL_DORADO ||
-      tipo === TipoJugador.PADRE_FUNDACION_VALLEJO
+      tipo === TipoJugador.PADRE_ELDORADO ||
+      tipo === TipoJugador.PADRE_FUNDACION
     ) {
       parentescoControl?.setValidators([Validators.required]);
     }

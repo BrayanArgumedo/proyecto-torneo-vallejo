@@ -71,7 +71,7 @@
             <p-button
               icon="pi pi-pencil"
               label="Editar"
-              severity="warning"
+              severity="warn"
               (onClick)="onEdit()">
             </p-button>
           }
@@ -232,14 +232,15 @@
               <div class="documento-item">
                 <i class="pi pi-file-pdf"></i>
                 <span class="documento-nombre">{{ doc.nombre || 'Documento' }}</span>
-                <p-button
-                  icon="pi pi-download"
-                  severity="secondary"
-                  [rounded]="true"
-                  [text]="true"
-                  pTooltip="Descargar"
-                  (onClick)="window.open(doc.url, '_blank')">
-                </p-button>
+                <a [href]="doc.url" target="_blank" rel="noopener noreferrer">
+                  <p-button
+                    icon="pi pi-download"
+                    severity="secondary"
+                    [rounded]="true"
+                    [text]="true"
+                    pTooltip="Descargar">
+                  </p-button>
+                </a>
               </div>
             }
           </div>

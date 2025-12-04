@@ -298,19 +298,19 @@ export class JugadorDetailComponent implements OnInit {
     return this.jugadoresService.calcularEdad(jugador.fechaNacimiento);
   }
 
-  getEstadoBadge(): { severity: 'success' | 'warning' | 'danger'; label: string } {
+  getEstadoBadge(): { severity: 'success' | 'warn' | 'danger'; label: string } {
     const jugador = this.jugador();
-    if (!jugador) return { severity: 'warning', label: 'Desconocido' };
+    if (!jugador) return { severity: 'warn', label: 'Desconocido' };
 
     switch (jugador.estadoValidacion) {
-      case EstadoValidacion.VALIDADO:
+      case 'VALIDADO':
         return { severity: 'success', label: 'Validado' };
-      case EstadoValidacion.PENDIENTE:
-        return { severity: 'warning', label: 'Pendiente' };
-      case EstadoValidacion.RECHAZADO:
+      case 'PENDIENTE':
+        return { severity: 'warn', label: 'Pendiente' };
+      case 'RECHAZADO':
         return { severity: 'danger', label: 'Rechazado' };
       default:
-        return { severity: 'warning', label: 'Desconocido' };
+        return { severity: 'warn', label: 'Desconocido' };
     }
   }
 
@@ -336,11 +336,23 @@ export class JugadorDetailComponent implements OnInit {
   // ============================================
   // Timeline Events
   // ============================================
-  getTimelineEvents(): any[] {
+  getTimelineEvents(): Array<{
+    status: string;
+    date: string;
+    icon: string;
+    color: string;
+    motivo?: string;
+  }> {
     const jugador = this.jugador();
     if (!jugador) return [];
 
-    const events = [
+    const events: Array<{
+      status: string;
+      date: string;
+      icon: string;
+      color: string;
+      motivo?: string;
+    }> = [
       {
         status: 'Creado',
         date: jugador.createdAt,
@@ -349,7 +361,7 @@ export class JugadorDetailComponent implements OnInit {
       }
     ];
 
-    if (jugador.estadoValidacion === EstadoValidacion.VALIDADO) {
+    if (jugador.estadoValidacion === 'VALIDADO') {
       events.push({
         status: 'Validado',
         date: jugador.updatedAt,
@@ -358,7 +370,7 @@ export class JugadorDetailComponent implements OnInit {
       });
     }
 
-    if (jugador.estadoValidacion === EstadoValidacion.RECHAZADO) {
+    if (jugador.estadoValidacion === 'RECHAZADO') {
       events.push({
         status: 'Rechazado',
         date: jugador.updatedAt,

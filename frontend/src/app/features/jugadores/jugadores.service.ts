@@ -71,7 +71,9 @@ export class JugadoresService {
    */
   getAll(filters?: JugadorFilters): Observable<ApiResponse<Jugador[]>> {
     const params = this.buildQueryParams(filters);
-    return this.apiService.get<ApiResponse<Jugador[]>>(this.baseUrl, { params });
+    const queryString = new URLSearchParams(params).toString();
+    const url = queryString ? `${this.baseUrl}?${queryString}` : this.baseUrl;
+    return this.apiService.get<ApiResponse<Jugador[]>>(url);
   }
 
   /**
@@ -218,10 +220,9 @@ export class JugadoresService {
       params.excludeId = jugadorId;
     }
 
-    return this.apiService.get<ApiResponse<{ disponible: boolean }>>(
-      `${this.baseUrl}/check/cedula`,
-      { params }
-    );
+    const queryString = new URLSearchParams(params).toString();
+    const url = `${this.baseUrl}/check/cedula?${queryString}`;
+    return this.apiService.get<ApiResponse<{ disponible: boolean }>>(url);
   }
 
   /**
@@ -232,15 +233,14 @@ export class JugadoresService {
     numeroCamiseta: number,
     jugadorId?: string
   ): Observable<ApiResponse<{ disponible: boolean }>> {
-    const params: any = { equipoId, numeroCamiseta };
+    const params: any = { equipoId, numeroCamiseta: numeroCamiseta.toString() };
     if (jugadorId) {
       params.excludeId = jugadorId;
     }
 
-    return this.apiService.get<ApiResponse<{ disponible: boolean }>>(
-      `${this.baseUrl}/check/numero-camiseta`,
-      { params }
-    );
+    const queryString = new URLSearchParams(params).toString();
+    const url = `${this.baseUrl}/check/numero-camiseta?${queryString}`;
+    return this.apiService.get<ApiResponse<{ disponible: boolean }>>(url);
   }
 
   /**

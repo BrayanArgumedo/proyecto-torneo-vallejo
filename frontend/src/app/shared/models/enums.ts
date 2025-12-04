@@ -158,3 +158,10 @@ export const EstadoValidacionLabels: Record<EstadoValidacionJugador, { label: st
   [EstadoValidacionJugador.VALIDADO]: { label: 'Validado', severity: 'success' },
   [EstadoValidacionJugador.RECHAZADO]: { label: 'Rechazado', severity: 'danger' }
 };
+
+// ============================================
+// 🔄 ALIASES - Para compatibilidad
+// ============================================
+
+export { PosicionJugador as Posicion };
+export { EstadoValidacionJugador as EstadoValidacion };

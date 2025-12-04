@@ -9,7 +9,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
 import { CardModule } from 'primeng/card';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -33,7 +33,7 @@ import { debounceTime } from 'rxjs';
     TableModule,
     ButtonModule,
     InputTextModule,
-    DropdownModule,
+    SelectModule,
     TagModule,
     CardModule,
     ToolbarModule,
@@ -305,16 +305,16 @@ export class JugadoresListComponent implements OnInit {
     this.loadJugadores();
   }
 
-  getEstadoBadge(estado: EstadoValidacion): { severity: 'success' | 'warning' | 'danger'; label: string } {
+  getEstadoBadge(estado: string): { severity: 'success' | 'warn' | 'danger'; label: string } {
     switch (estado) {
-      case EstadoValidacion.VALIDADO:
+      case 'VALIDADO':
         return { severity: 'success', label: 'Validado' };
-      case EstadoValidacion.PENDIENTE:
-        return { severity: 'warning', label: 'Pendiente' };
-      case EstadoValidacion.RECHAZADO:
+      case 'PENDIENTE':
+        return { severity: 'warn', label: 'Pendiente' };
+      case 'RECHAZADO':
         return { severity: 'danger', label: 'Rechazado' };
       default:
-        return { severity: 'warning', label: 'Desconocido' };
+        return { severity: 'warn', label: 'Desconocido' };
     }
   }
 

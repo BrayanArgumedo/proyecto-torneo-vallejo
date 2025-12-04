@@ -75,18 +75,15 @@
           <!-- Fecha de Nacimiento -->
           <div class="field">
             <label for="fechaNacimiento">Fecha de Nacimiento *</label>
-            <p-calendar
+            <p-datepicker
               inputId="fechaNacimiento"
               formControlName="fechaNacimiento"
               [showIcon]="true"
               dateFormat="dd/mm/yy"
               placeholder="Seleccione fecha"
               [maxDate]="new Date()"
-              [yearRange]="'1960:' + new Date().getFullYear()"
-              [yearNavigator]="true"
-              [monthNavigator]="true"
               styleClass="w-full">
-            </p-calendar>
+            </p-datepicker>
             @if (getFieldError('fechaNacimiento')) {
               <small class="error-message">{{ getFieldError('fechaNacimiento') }}</small>
             }
@@ -154,23 +151,22 @@
           <!-- Tipo de Jugador -->
           <div class="field field-full">
             <label for="tipo">Tipo de Jugador *</label>
-            <p-dropdown
+            <p-select
               inputId="tipo"
               formControlName="tipo"
               [options]="tipoJugadorOptions"
               optionLabel="label"
               optionValue="value"
               placeholder="Seleccione tipo de jugador"
-              [showClear]="true"
               styleClass="w-full">
-            </p-dropdown>
+            </p-select>
             @if (getFieldError('tipo')) {
               <small class="error-message">{{ getFieldError('tipo') }}</small>
             }
           </div>
 
           <!-- Institución Educativa (condicional) -->
-          @if (form.get('tipo')?.value === 'ESTUDIANTE_IE_EL_DORADO') {
+          @if (form.get('tipo')?.value === 'ESTUDIANTE_ELDORADO') {
             <div class="field field-full">
               <label for="institucionEducativa">Institución Educativa *</label>
               <input
@@ -187,8 +183,8 @@
 
           <!-- Parentesco (condicional) -->
           @if (
-            form.get('tipo')?.value === 'PADRE_IE_EL_DORADO' ||
-            form.get('tipo')?.value === 'PADRE_FUNDACION_VALLEJO'
+            form.get('tipo')?.value === 'PADRE_ELDORADO' ||
+            form.get('tipo')?.value === 'PADRE_FUNDACION'
           ) {
             <div class="field field-full">
               <label for="parentescoEstudiante">Parentesco con Estudiante *</label>
@@ -207,7 +203,7 @@
           <!-- Equipo -->
           <div class="field">
             <label for="equipoId">Equipo *</label>
-            <p-dropdown
+            <p-select
               inputId="equipoId"
               formControlName="equipoId"
               [options]="equipoOptions()"
@@ -216,7 +212,7 @@
               placeholder="Seleccione equipo"
               [disabled]="isDelegado()"
               styleClass="w-full">
-            </p-dropdown>
+            </p-select>
             @if (getFieldError('equipoId')) {
               <small class="error-message">{{ getFieldError('equipoId') }}</small>
             }
@@ -228,7 +224,7 @@
           <!-- Posición -->
           <div class="field">
             <label for="posicion">Posición *</label>
-            <p-dropdown
+            <p-select
               inputId="posicion"
               formControlName="posicion"
               [options]="posicionOptions"
@@ -236,7 +232,7 @@
               optionValue="value"
               placeholder="Seleccione posición"
               styleClass="w-full">
-            </p-dropdown>
+            </p-select>
             @if (getFieldError('posicion')) {
               <small class="error-message">{{ getFieldError('posicion') }}</small>
             }
